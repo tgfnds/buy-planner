@@ -24,7 +24,8 @@ function App() {
             flexDirection="column"
             alignItems="center"
             width="600px"
-            p={3}
+            p={4}
+            borderRadius={2}
             bgcolor="background.paper"
           >
             <BuyItemForm />

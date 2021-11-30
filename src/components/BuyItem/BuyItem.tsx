@@ -1,8 +1,8 @@
-import { Button, ListItem, ListItemButton, ListItemText } from "@mui/material";
-import { grey, red } from "@mui/material/colors";
+import { IconButton, ListItem, ListItemText } from "@mui/material";
 import { MouseEvent } from "react";
 import { useItemContext } from "../../context/ItemProvider";
 import { BuyItem as BuyItemType } from "../../types";
+import DeleteIcon from "@mui/icons-material/DeleteOutline";
 
 interface BuyItemProps {
   item: BuyItemType;
@@ -13,7 +13,7 @@ const BuyItem = ({ item }: BuyItemProps) => {
 
   function onDelete(e: MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
-    deleteItem(item.id);
+    item.id && deleteItem(item.id);
   }
 
   return (
@@ -30,21 +30,18 @@ const BuyItem = ({ item }: BuyItemProps) => {
       }}
       disablePadding
     >
-      <Button
+      <IconButton
         className="DeleteButton"
-        variant="text"
+        color="error"
         sx={{
-          padding: "0.4rem 1rem",
-          margin: "0.4rem 0",
-          marginLeft: -12,
+          left: -28,
           position: "absolute",
           opacity: 0,
-          color: red[700],
         }}
         onClick={(e) => onDelete(e)}
       >
-        Delete
-      </Button>
+        <DeleteIcon />
+      </IconButton>
       <ListItemText primary={item.name} />
       <ListItemText sx={{ textAlign: "end" }} primary={`${item.value} €`} />
     </ListItem>
