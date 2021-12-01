@@ -1,6 +1,6 @@
 import { Button, InputAdornment, TextField } from "@mui/material";
 import { Box } from "@mui/system";
-import { ChangeEvent, MouseEvent, useRef } from "react";
+import { ChangeEvent, MouseEvent, useEffect, useRef } from "react";
 import { defaultState } from "../../context/FormContext";
 import { useFormContext } from "../../context/FormContextProvider";
 import { useItemContext } from "../../context/ItemContextProvider";
@@ -47,6 +47,10 @@ const BuyItemForm = () => {
     nameRef.current?.focus();
     setType("ADD");
   }
+
+  useEffect(() => {
+    nameRef.current?.focus();
+  }, [type]);
 
   return (
     <Box component="form" noValidate autoComplete="off" display="flex" gap={2}>

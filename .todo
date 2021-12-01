@@ -9,10 +9,16 @@ Project:
       ✔ Change the add form to also edit an item. @done(21-12-01 16:47)
     ✔ Add a loader when awaiting for data to come from firebase. @started(21-12-01 16:47) @done(21-12-01 18:13) @lasted(1h26m19s)
     ✔ Setup the loader when editing and stuff. @started(21-12-01 18:13) @done(21-12-01 18:27) @lasted(14m49s)
-    ☐ Focus name input when editing an item.
-    ☐ Add a modal to confirm deletion.
-      ☐ Add a new state provider.
+    ✔ Focus name input when editing an item. @started(21-12-01 18:29) @done(21-12-01 18:39) @lasted(10m)
+    ☐ Add a modal to confirm deletion. 
+      ☐ Add a new state provider. @est(2h)
+      ☐ Implement provider and create UI. @est(1h)
     ✔ Create a form context. @started(21-12-01 14:45) @done(21-12-01 16:11) @lasted(1h26m24s)
+    ☐ Add undo functionality. @est(8h)
+    ☐ Add authentication and authorization.
+      ☐ Study how to implement firebase auth system. @est(1h)
+      ☐ Create a auth context maybe? @est(2h)
+      ☐ Make the UI. @est(2h)
 
   Bugs:
     ✔ Fix delete button overlapping the list border. @done(21-12-01 13:32)
@@ -21,7 +27,7 @@ Project:
     Change how validation works to use maybe the Number() validation from
     typescript. This might be better than use the pattern attribute.
 
-  Changes:
+  Changes (Thoughts):
     ☐ Think about a name change to the project.
     ☐ Change List to Table.
     Think about this.
