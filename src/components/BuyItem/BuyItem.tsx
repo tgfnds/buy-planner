@@ -59,9 +59,21 @@ const BuyItem = ({ item }: BuyItemProps) => {
       }}
       disablePadding
     >
-      <ListItemText primary={item.name} />
-      <ListItemText sx={{ textAlign: "end" }} primary={`${item.value} €`} />
-      <Box className="Actions" ml={1} display="flex">
+      <ListItemText
+        primaryTypographyProps={{
+          overflow: "hidden",
+          textOverflow: "ellipsis",
+        }}
+        primary={item.name}
+      />
+      <ListItemText
+        primaryTypographyProps={{
+          fontWeight: "bold",
+        }}
+        sx={{ marginLeft: 3, flex: "1 0 auto", textAlign: "end" }}
+        primary={`${item.value} €`}
+      />
+      <Box className="Actions" ml={2} display="flex">
         {isDeleting ? (
           <IconButton
             color="error"
