@@ -3,12 +3,15 @@ import {
   getFirestore,
   collection,
   doc,
+  query,
+  orderBy,
   getDocs,
   addDoc,
   updateDoc,
   deleteDoc,
   QueryDocumentSnapshot,
   WithFieldValue,
+  Timestamp,
 } from "firebase/firestore";
 import { BuyItem } from "../types";
 import { FirebaseConfig } from "./types";
@@ -38,7 +41,8 @@ const colRef = collection(db, "items").withConverter<BuyItem>(
 
 export async function fetchItems(): Promise<BuyItem[] | null> {
   try {
-    const itemSnapshot = await getDocs(colRef);
+    const q = query(colRef, orderBy("timestamp", "desc"));
+    const itemSnapshot = await getDocs(q);
     const item = itemSnapshot.docs.map((doc) => ({
       ...doc.data(),
       id: doc.id,
@@ -52,10 +56,15 @@ export async function fetchItems(): Promise<BuyItem[] | null> {
 
 export async function addItem(newItem: BuyItem): Promise<BuyItem | null> {
   try {
-    const docRef = await addDoc(colRef, newItem);
+    const timestamp = Timestamp.now();
+    const docRef = await addDoc(colRef, {
+      ...newItem,
+      timestamp,
+    });
     newItem = {
       ...newItem,
       id: docRef.id,
+      timestamp,
     };
     return newItem;
   } catch (error) {
@@ -67,7 +76,7 @@ export async function addItem(newItem: BuyItem): Promise<BuyItem | null> {
 export async function updateItem(item: BuyItem): Promise<BuyItem | null> {
   try {
     const docRef = doc(colRef, item.id);
-    await updateDoc(docRef, item);
+    await updateDoc(docRef, { ...item, timestamp: Timestamp.now() });
     return item;
   } catch (error) {
     console.log(`[UpdateItem]: Couldn't update item. ${error}`);

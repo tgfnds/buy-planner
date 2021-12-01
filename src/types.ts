@@ -1,7 +1,10 @@
+import { Timestamp } from "@firebase/firestore";
+
 export interface BuyItem {
   id?: string;
   name: string;
   value: string;
+  timestamp?: Timestamp;
 }
 
 export interface IItemState {

@@ -30,7 +30,7 @@ function App() {
               borderRadius={2}
               bgcolor="background.paper"
             >
-              <Typography variant="h1" fontSize={64} marginBottom={3}>
+              <Typography variant="h2" fontSize={64} marginBottom={3}>
                 BuyPlanner
               </Typography>
               <Box borderRadius={2}>

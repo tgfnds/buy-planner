@@ -5,6 +5,21 @@ export const theme = createTheme({
     h1: {
       fontFamily: "comforter",
     },
+    h2: {
+      fontFamily: "comforter",
+    },
+    h3: {
+      fontFamily: "comforter",
+    },
+    h4: {
+      fontFamily: "comforter",
+    },
+    h5: {
+      fontFamily: "comforter",
+    },
+    h6: {
+      fontFamily: "comforter",
+    },
   },
   palette: {
     mode: "dark",

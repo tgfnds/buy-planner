@@ -22,7 +22,7 @@ const ItemContextProvider: FC = ({ children }) => {
     setLoading(true);
     try {
       const item = await addItemFirebase(newItem);
-      if (item) setItems([...items, item]);
+      if (item) setItems([item, ...items]);
     } catch (error) {
       console.log("Couldn't add item.", error);
     }
