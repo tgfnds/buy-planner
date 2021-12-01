@@ -91,7 +91,7 @@ const BuyItemForm = () => {
           color="success"
           disabled={isSubmitDisabled()}
         >
-          {type}
+          {type === "ADD" ? "ADD" : "SAVE"}
         </Button>
       </Box>
     </Box>
