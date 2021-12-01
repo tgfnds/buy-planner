@@ -1,26 +1,22 @@
 import { Button, InputAdornment, TextField } from "@mui/material";
 import { Box } from "@mui/system";
-import { ChangeEvent, MouseEvent, useRef, useState } from "react";
+import { ChangeEvent, MouseEvent, useRef } from "react";
+import { defaultState } from "../../context/FormContext";
+import { useFormContext } from "../../context/FormContextProvider";
 import { useItemContext } from "../../context/ItemProvider";
-import { BuyItem } from "../../types";
-
-interface FormState {
-  name: string;
-  value: string;
-}
-
-const defaultState = {
-  name: "",
-  value: "",
-};
 
 const BuyItemForm = () => {
-  const { addItem } = useItemContext();
-  const [state, setState] = useState<FormState>(defaultState);
+  const { type, item, setItem, setType } = useFormContext();
+  const { addItem, updateItem } = useItemContext();
 
   const nameRef = useRef<HTMLInputElement | null>(null);
 
-  const isSubmitDisabled = () => (!state.name || !state.value) ?? true;
+  const isSubmitDisabled = () => (!item.name || !item.value) ?? true;
+
+  function onClear() {
+    setItem(defaultState.item);
+    setType("ADD");
+  }
 
   function onChange(e: ChangeEvent<HTMLInputElement>) {
     e.preventDefault();
@@ -29,48 +25,48 @@ const BuyItemForm = () => {
 
     if (pattern) {
       if (value.match(pattern)) {
-        setState({
-          ...state,
+        setItem({
+          ...item,
           [e.target.name]: value,
         });
       }
       return;
     }
 
-    setState({
-      ...state,
+    setItem({
+      ...item,
       [e.target.name]: value,
     });
   }
 
   function onSubmit(e: MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
-    const item: BuyItem = {
-      name: state.name,
-      value: Number(state.value),
-    };
-    addItem(item);
-    setState(defaultState);
+    if (type === "ADD") addItem(item);
+    else if (type === "EDIT") updateItem(item);
+    setItem(defaultState.item);
     nameRef.current?.focus();
+    setType("ADD");
   }
 
   return (
     <Box component="form" noValidate autoComplete="off" display="flex" gap={2}>
       <TextField
+        sx={{ flex: 3 }}
         inputRef={nameRef}
         size="small"
         name="name"
         label="Name"
-        value={state.name}
+        value={item.name}
         onChange={onChange}
         inputProps={{ pattern: "^.{0,100}$" }}
         variant="outlined"
       />
       <TextField
+        sx={{ flex: 2 }}
         size="small"
         name="value"
         label="Value"
-        value={state.value}
+        value={item.value}
         onChange={onChange}
         inputProps={{ inputMode: "numeric", pattern: "^[0-9]{0,10}$" }}
         variant="outlined"
@@ -78,15 +74,22 @@ const BuyItemForm = () => {
           endAdornment: <InputAdornment position="end">€</InputAdornment>,
         }}
       />
-      <Button
-        variant="outlined"
-        onClick={onSubmit}
-        type="submit"
-        color="success"
-        disabled={isSubmitDisabled()}
-      >
-        Add
-      </Button>
+      <Box display="flex" gap={1}>
+        {type === "EDIT" && (
+          <Button variant="outlined" color="error" onClick={onClear}>
+            Clear
+          </Button>
+        )}
+        <Button
+          variant="outlined"
+          onClick={onSubmit}
+          type="submit"
+          color="success"
+          disabled={isSubmitDisabled()}
+        >
+          {type}
+        </Button>
+      </Box>
     </Box>
   );
 };

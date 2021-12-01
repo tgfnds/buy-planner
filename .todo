@@ -1,0 +1,25 @@
+Project:
+  Todo:
+    ✔ Add a title with a cool cute font. @started(21-12-01 12:28) @done(21-12-01 12:41) @lasted(13m47s)
+    ✔ Divide the list from the form. @done(21-12-01 12:48)
+    Either with margin or a divider.
+    ☐ Update buy item.
+      ✔ Add a "edit" button. @done(21-12-01 13:04)
+      ☐ Add update call to firebase api. @started(21-12-01 16:11)
+      ☐ Change the add form to also edit an item.
+    ☐ Add a loader when awaiting for data to come from firebase.
+    ☐ Add a modal to confirm deletion.
+      ☐ Add a new state provider.
+    ✔ Create a form context. @started(21-12-01 14:45) @done(21-12-01 16:11) @lasted(1h26m24s)
+
+  Bugs:
+    ✔ Fix delete button overlapping the list border. @done(21-12-01 13:32)
+    Align the buttons to the right of the item name.
+    ☐ Cannot add ',' or '.' to values.
+    Change how validation works to use maybe the Number() validation from
+    typescript. This might be better than use the pattern attribute.
+
+  Changes:
+    ☐ Think about a name change to the project.
+    ☐ Change List to Table.
+    Think about this.

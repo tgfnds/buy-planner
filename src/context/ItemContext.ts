@@ -5,12 +5,14 @@ interface IItemContext {
   items: BuyItem[];
   addItem: (newItem: BuyItem) => void;
   deleteItem: (id: string) => void;
+  updateItem: (item: BuyItem) => void;
 }
 
 export const defaultState = {
   items: [],
   addItem: () => null,
   deleteItem: () => null,
+  updateItem: () => null,
 };
 
 const ItemContext = createContext<IItemContext>(defaultState);

@@ -3,12 +3,16 @@ import { MouseEvent } from "react";
 import { useItemContext } from "../../context/ItemProvider";
 import { BuyItem as BuyItemType } from "../../types";
 import DeleteIcon from "@mui/icons-material/DeleteOutline";
+import EditIcon from "@mui/icons-material/Edit";
+import { Box } from "@mui/system";
+import { useFormContext } from "../../context/FormContextProvider";
 
 interface BuyItemProps {
   item: BuyItemType;
 }
 
 const BuyItem = ({ item }: BuyItemProps) => {
+  const { setType, setItem } = useFormContext();
   const { deleteItem } = useItemContext();
 
   function onDelete(e: MouseEvent<HTMLButtonElement>) {
@@ -16,34 +20,36 @@ const BuyItem = ({ item }: BuyItemProps) => {
     item.id && deleteItem(item.id);
   }
 
+  function onEdit(e: MouseEvent<HTMLButtonElement>) {
+    e.preventDefault();
+    setType("EDIT");
+    setItem({
+      id: item.id,
+      name: item.name,
+      value: item.value,
+    });
+  }
+
   return (
     <ListItem
       sx={{
-        borderRadius: 1,
-        padding: "0.4rem 1rem",
-        margin: "0.4rem 0",
-        minWidth: 500,
-        justifyContent: "space-between",
-        ":hover > .DeleteButton": {
+        padding: "0.2rem 1rem",
+        ":hover > .Actions": {
           opacity: 1,
         },
       }}
       disablePadding
     >
-      <IconButton
-        className="DeleteButton"
-        color="error"
-        sx={{
-          left: -28,
-          position: "absolute",
-          opacity: 0,
-        }}
-        onClick={(e) => onDelete(e)}
-      >
-        <DeleteIcon />
-      </IconButton>
       <ListItemText primary={item.name} />
       <ListItemText sx={{ textAlign: "end" }} primary={`${item.value} €`} />
+      <Box className="Actions" ml={1} display="flex">
+        <IconButton color="secondary" size="small" onClick={(e) => onEdit(e)}>
+          <EditIcon />
+        </IconButton>
+        <IconButton color="secondary" size="small" onClick={(e) => onDelete(e)}>
+          <DeleteIcon />
+        </IconButton>
+      </Box>
     </ListItem>
   );
 };

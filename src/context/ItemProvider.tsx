@@ -4,6 +4,7 @@ import {
   fetchItems as fetchItemsFirebase,
   addItem as addItemFirebase,
   deleteItem as deleteItemFirebase,
+  updateItem as updateItemFirebase,
 } from "../api/firebase";
 import { BuyItem } from "../types";
 
@@ -38,6 +39,24 @@ const ItemProvider: FC = ({ children }) => {
     }
   }
 
+  /**
+   * Updates an item to the database and updates state.
+   * @param item Updated item.
+   */
+  async function updateItem(item: BuyItem) {
+    try {
+      const updated = await updateItemFirebase(item);
+      if (updated) {
+        const index = items.findIndex((i) => i.id === updated.id);
+        const newItems = [...items];
+        newItems[index] = updated;
+        setItems(newItems);
+      }
+    } catch (error) {
+      console.log("Couldn't update item.", error);
+    }
+  }
+
   useEffect(() => {
     async function fetch() {
       try {
@@ -56,6 +75,7 @@ const ItemProvider: FC = ({ children }) => {
         items,
         addItem,
         deleteItem,
+        updateItem,
       }}
     >
       {children}

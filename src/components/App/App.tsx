@@ -1,10 +1,10 @@
-import { CssBaseline, ThemeProvider } from "@mui/material";
+import { CssBaseline, ThemeProvider, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import ItemProvider from "../../context/ItemProvider";
-import { theme } from "../../theme";
 import BuyItemForm from "../BuyItem/BuyItemForm";
 import BuyItemList from "../BuyItem/BuyItemList";
-import "./App.css";
+import { theme } from "../../theme";
+import FormContextProvider from "../../context/FormContextProvider";
 
 function App() {
   return (
@@ -19,18 +19,32 @@ function App() {
           justifyContent="center"
           bgcolor="background"
         >
-          <Box
-            display="flex"
-            flexDirection="column"
-            alignItems="center"
-            width="600px"
-            p={4}
-            borderRadius={2}
-            bgcolor="background.paper"
-          >
-            <BuyItemForm />
-            <BuyItemList />
-          </Box>
+          <FormContextProvider>
+            <Box
+              display="flex"
+              flexDirection="column"
+              alignItems="center"
+              width="600px"
+              p={5}
+              borderRadius={2}
+              bgcolor="background.paper"
+            >
+              <Typography variant="h1" fontSize={64} marginBottom={3}>
+                BuyPlanner
+              </Typography>
+              <Box borderRadius={2}>
+                <BuyItemForm />
+              </Box>
+              <Box
+                width="100%"
+                mt={2}
+                bgcolor="background.default"
+                borderRadius={1}
+              >
+                <BuyItemList />
+              </Box>
+            </Box>
+          </FormContextProvider>
         </Box>
       </ItemProvider>
     </ThemeProvider>
