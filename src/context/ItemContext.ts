@@ -2,6 +2,7 @@ import { createContext } from "react";
 import { BuyItem } from "../types";
 
 interface IItemContext {
+  loading: boolean;
   items: BuyItem[];
   addItem: (newItem: BuyItem) => void;
   deleteItem: (id: string) => void;
@@ -9,6 +10,7 @@ interface IItemContext {
 }
 
 export const defaultState = {
+  loading: true,
   items: [],
   addItem: () => null,
   deleteItem: () => null,

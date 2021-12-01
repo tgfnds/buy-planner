@@ -1,5 +1,5 @@
 import { List } from "@mui/material";
-import { useItemContext } from "../../context/ItemProvider";
+import { useItemContext } from "../../context/ItemContextProvider";
 import BuyItem from "./BuyItem";
 
 const BuyItemList = () => {

@@ -10,7 +10,8 @@ import { BuyItem } from "../types";
 
 export const useItemContext = () => useContext(ItemContext);
 
-const ItemProvider: FC = ({ children }) => {
+const ItemContextProvider: FC = ({ children }) => {
+  const [loading, setLoading] = useState(defaultState.loading);
   const [items, setItems] = useState<BuyItem[]>(defaultState.items);
 
   /**
@@ -18,12 +19,14 @@ const ItemProvider: FC = ({ children }) => {
    * @param newItem New item to add.
    */
   async function addItem(newItem: BuyItem) {
+    setLoading(true);
     try {
       const item = await addItemFirebase(newItem);
       if (item) setItems([...items, item]);
     } catch (error) {
       console.log("Couldn't add item.", error);
     }
+    setLoading(false);
   }
 
   /**
@@ -31,12 +34,14 @@ const ItemProvider: FC = ({ children }) => {
    * @param id Id of the item to remove.
    */
   async function deleteItem(id: string) {
+    setLoading(true);
     try {
       const rId = await deleteItemFirebase(id);
       if (rId) setItems(items.filter((i) => i.id !== id));
     } catch (error) {
       console.log("Couldn't delete item.", error);
     }
+    setLoading(false);
   }
 
   /**
@@ -44,6 +49,7 @@ const ItemProvider: FC = ({ children }) => {
    * @param item Updated item.
    */
   async function updateItem(item: BuyItem) {
+    setLoading(true);
     try {
       const updated = await updateItemFirebase(item);
       if (updated) {
@@ -55,6 +61,7 @@ const ItemProvider: FC = ({ children }) => {
     } catch (error) {
       console.log("Couldn't update item.", error);
     }
+    setLoading(false);
   }
 
   useEffect(() => {
@@ -62,6 +69,7 @@ const ItemProvider: FC = ({ children }) => {
       try {
         const items = await fetchItemsFirebase();
         if (items) setItems(items);
+        setLoading(false);
       } catch (error) {
         console.log("Couldn't load items.", error);
       }
@@ -72,6 +80,7 @@ const ItemProvider: FC = ({ children }) => {
   return (
     <ItemContext.Provider
       value={{
+        loading,
         items,
         addItem,
         deleteItem,
@@ -83,4 +92,4 @@ const ItemProvider: FC = ({ children }) => {
   );
 };
 
-export default ItemProvider;
+export default ItemContextProvider;

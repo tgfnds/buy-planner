@@ -3,7 +3,7 @@ import { Box } from "@mui/system";
 import { ChangeEvent, MouseEvent, useRef } from "react";
 import { defaultState } from "../../context/FormContext";
 import { useFormContext } from "../../context/FormContextProvider";
-import { useItemContext } from "../../context/ItemProvider";
+import { useItemContext } from "../../context/ItemContextProvider";
 
 const BuyItemForm = () => {
   const { type, item, setItem, setType } = useFormContext();

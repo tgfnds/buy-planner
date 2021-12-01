@@ -1,6 +1,6 @@
 import { IconButton, ListItem, ListItemText } from "@mui/material";
 import { MouseEvent } from "react";
-import { useItemContext } from "../../context/ItemProvider";
+import { useItemContext } from "../../context/ItemContextProvider";
 import { BuyItem as BuyItemType } from "../../types";
 import DeleteIcon from "@mui/icons-material/DeleteOutline";
 import EditIcon from "@mui/icons-material/Edit";

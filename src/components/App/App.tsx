@@ -1,16 +1,17 @@
 import { CssBaseline, ThemeProvider, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import ItemProvider from "../../context/ItemProvider";
+import ItemContextProvider from "../../context/ItemContextProvider";
 import BuyItemForm from "../BuyItem/BuyItemForm";
 import BuyItemList from "../BuyItem/BuyItemList";
 import { theme } from "../../theme";
 import FormContextProvider from "../../context/FormContextProvider";
+import ProgressBar from "../ui/ProgressBar";
 
 function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <ItemProvider>
+      <ItemContextProvider>
         <Box
           display="flex"
           minHeight="100vh"
@@ -41,12 +42,13 @@ function App() {
                 bgcolor="background.default"
                 borderRadius={1}
               >
+                <ProgressBar />
                 <BuyItemList />
               </Box>
             </Box>
           </FormContextProvider>
         </Box>
-      </ItemProvider>
+      </ItemContextProvider>
     </ThemeProvider>
   );
 }

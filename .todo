@@ -3,11 +3,13 @@ Project:
     ✔ Add a title with a cool cute font. @started(21-12-01 12:28) @done(21-12-01 12:41) @lasted(13m47s)
     ✔ Divide the list from the form. @done(21-12-01 12:48)
     Either with margin or a divider.
-    ☐ Update buy item.
+    ✔ Update buy item. @done(21-12-01 16:47)
       ✔ Add a "edit" button. @done(21-12-01 13:04)
-      ☐ Add update call to firebase api. @started(21-12-01 16:11)
-      ☐ Change the add form to also edit an item.
-    ☐ Add a loader when awaiting for data to come from firebase.
+      ✔ Add update call to firebase api. @started(21-12-01 16:11) @done(21-12-01 16:46) @lasted(35m58s)
+      ✔ Change the add form to also edit an item. @done(21-12-01 16:47)
+    ✔ Add a loader when awaiting for data to come from firebase. @started(21-12-01 16:47) @done(21-12-01 18:13) @lasted(1h26m19s)
+    ✔ Setup the loader when editing and stuff. @started(21-12-01 18:13) @done(21-12-01 18:27) @lasted(14m49s)
+    ☐ Focus name input when editing an item.
     ☐ Add a modal to confirm deletion.
       ☐ Add a new state provider.
     ✔ Create a form context. @started(21-12-01 14:45) @done(21-12-01 16:11) @lasted(1h26m24s)
