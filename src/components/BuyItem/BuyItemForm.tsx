@@ -6,7 +6,7 @@ import { useFormContext } from "../../context/FormContextProvider";
 import { useItemContext } from "../../context/ItemContextProvider";
 
 const BuyItemForm = () => {
-  const { type, item, setItem, setType } = useFormContext();
+  const { type, data: item, setData: setItem, setType } = useFormContext();
   const { addItem, updateItem } = useItemContext();
 
   const nameRef = useRef<HTMLInputElement | null>(null);
@@ -14,7 +14,7 @@ const BuyItemForm = () => {
   const isSubmitDisabled = () => (!item.name || !item.value) ?? true;
 
   function onClear() {
-    setItem(defaultState.item);
+    setItem(defaultState.data);
     setType("ADD");
   }
 
@@ -43,7 +43,7 @@ const BuyItemForm = () => {
     e.preventDefault();
     if (type === "ADD") addItem(item);
     else if (type === "EDIT") updateItem(item);
-    setItem(defaultState.item);
+    setItem(defaultState.data);
     nameRef.current?.focus();
     setType("ADD");
   }

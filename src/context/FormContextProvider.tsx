@@ -6,15 +6,15 @@ export const useFormContext = () => useContext(FormContext);
 
 const FormContextProvider: FC = ({ children }) => {
   const [type, setType] = useState(defaultState.type);
-  const [item, setItem] = useState<BuyItem>(defaultState.item);
+  const [data, setData] = useState<BuyItem>(defaultState.data);
 
   return (
     <FormContext.Provider
       value={{
         type,
-        item,
+        data,
         setType,
-        setItem,
+        setData,
       }}
     >
       {children}

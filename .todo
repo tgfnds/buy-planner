@@ -10,9 +10,9 @@ Project:
     ✔ Add a loader when awaiting for data to come from firebase. @started(21-12-01 16:47) @done(21-12-01 18:13) @lasted(1h26m19s)
     ✔ Setup the loader when editing and stuff. @started(21-12-01 18:13) @done(21-12-01 18:27) @lasted(14m49s)
     ✔ Focus name input when editing an item. @started(21-12-01 18:29) @done(21-12-01 18:39) @lasted(10m)
-    ☐ Add a modal to confirm deletion. 
-      ☐ Add a new state provider. @est(2h)
-      ☐ Implement provider and create UI. @est(1h)
+    ✔ Add a modal to confirm deletion. @done(21-12-01 19:03)
+      ✘ Add a new state provider. @est(2h) @cancelled(21-12-01 19:03)
+      ✔ Implement provider and create UI. @est(1h) @started(21-12-01 18:47) @done(21-12-01 19:03) @lasted(16m5s)
     ✔ Create a form context. @started(21-12-01 14:45) @done(21-12-01 16:11) @lasted(1h26m24s)
     ☐ Add undo functionality. @est(8h)
     ☐ Add authentication and authorization.

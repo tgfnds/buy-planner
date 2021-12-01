@@ -3,12 +3,12 @@ import { IFormState } from "../types";
 
 export const defaultState: IFormState = {
   type: "ADD",
-  item: {
+  data: {
     name: "",
     value: "",
   },
   setType: () => null,
-  setItem: () => null,
+  setData: () => null,
 };
 
 const FormContext = createContext<IFormState>(defaultState);

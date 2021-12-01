@@ -14,9 +14,9 @@ export type FormType = "ADD" | "EDIT";
 
 export interface IFormState {
   type: FormType;
-  item: BuyItem;
+  data: BuyItem;
   setType: (type: FormType) => void;
-  setItem: (item: BuyItem) => void;
+  setData: (item: BuyItem) => void;
 }
 
 export interface IAppState {
