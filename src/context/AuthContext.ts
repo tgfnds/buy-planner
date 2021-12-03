@@ -6,8 +6,8 @@ interface AuthState {
   setUser: Dispatch<SetStateAction<User | null>>;
   loading: boolean;
   setLoading: Dispatch<SetStateAction<boolean>>;
-  signIn: (email: string, password: string) => Promise<boolean>;
-  signUp: (email: string, password: string) => Promise<boolean>;
+  signIn: (email: string, password: string) => Promise<void>;
+  signUp: (email: string, password: string) => Promise<void>;
   signOut: () => Promise<void>;
 }
 
@@ -16,8 +16,8 @@ export const defaultState: AuthState = {
   setUser: () => null,
   loading: false,
   setLoading: () => null,
-  signIn: async () => false,
-  signUp: async () => false,
+  signIn: async () => {},
+  signUp: async () => {},
   signOut: async () => {},
 };
 

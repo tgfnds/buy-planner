@@ -47,12 +47,7 @@ const SignupForm = () => {
     }
     setLoading(true);
     try {
-      const signed = await signUp(formState.email, formState.password);
-      if (signed) {
-        navigate(routes.home);
-      } else {
-        // TODO: Show an alert calling the error.
-      }
+      await signUp(formState.email, formState.password);
     } catch (error) {
       // TODO: Show an alert or something.
       console.log(`Couldn't signup. ${error}`);

@@ -44,19 +44,14 @@ const SigninForm = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const signed = await signIn(formState.email, formState.password);
-      if (signed) {
-        navigate(routes.home);
-      } else {
-        setFormState({
-          ...formState,
-          password: defaultFormState.password,
-        });
-      }
+      setFormState({
+        ...formState,
+        password: defaultFormState.password,
+      });
+      await signIn(formState.email, formState.password);
     } catch (error) {
       // TODO: Show an alert or something.
       console.log(`Couldn't login. ${error}`);
-
       setLoading(false);
     }
   }

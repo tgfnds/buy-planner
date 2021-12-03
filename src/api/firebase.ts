@@ -1,6 +1,7 @@
 import { initializeApp, FirebaseOptions } from "firebase/app";
 import {
   getAuth,
+  onAuthStateChanged,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut as signOutFirebase,
@@ -141,6 +142,21 @@ export async function signOut() {
   } catch (error) {
     return handleError(error as FirebaseError);
   }
+}
+
+export function subscribeAuthStateChanged(
+  updateUser: (user: User | null) => void
+) {
+  return onAuthStateChanged(
+    auth,
+    (user) => {
+      console.log("User changed to: ", user);
+      updateUser(user);
+    },
+    (error) => {
+      console.log(`[OnAuthStateChanged] ${error.message}`);
+    }
+  );
 }
 
 function handleError(error: FirebaseError) {
