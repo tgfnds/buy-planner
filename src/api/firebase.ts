@@ -12,6 +12,7 @@ import {
   collection,
   doc,
   query,
+  where,
   orderBy,
   getDocs,
   addDoc,
@@ -22,7 +23,8 @@ import {
   Timestamp,
 } from "firebase/firestore";
 import { FirebaseError } from "@firebase/util";
-import { BuyItem } from "../types";
+import { IBuyItem } from "../types";
+import { nameof } from "../utils";
 
 const firebaseConfig: FirebaseOptions = {
   apiKey: process.env.REACT_APP_API_KEY,
@@ -45,36 +47,40 @@ function converter<T>() {
   };
 }
 
-const colRef = collection(db, "items").withConverter<BuyItem>(
-  converter<BuyItem>()
+const colRef = collection(db, "items").withConverter<IBuyItem>(
+  converter<IBuyItem>()
 );
 
-export async function fetchItems(): Promise<BuyItem[] | null> {
+export async function fetchItems(userId: string): Promise<IBuyItem[] | null> {
   try {
-    const q = query(colRef, orderBy("timestamp", "desc"));
+    const q = query(
+      colRef,
+      where(nameof<IBuyItem>("userId"), "==", userId),
+      orderBy(nameof<IBuyItem>("createdAt"), "desc")
+    );
     const itemSnapshot = await getDocs(q);
-    const item = itemSnapshot.docs.map((doc) => ({
+    const items = itemSnapshot.docs.map((doc) => ({
       ...doc.data(),
       id: doc.id,
     }));
-    return item;
+    return items;
   } catch (error) {
     console.log(`[FetchItems]: Couldn't fetch items. ${error}`);
     return null;
   }
 }
 
-export async function addItem(newItem: BuyItem): Promise<BuyItem | null> {
+export async function addItem(newItem: IBuyItem): Promise<IBuyItem | null> {
   try {
     const timestamp = Timestamp.now();
     const docRef = await addDoc(colRef, {
       ...newItem,
-      timestamp,
+      createdAt: timestamp,
     });
     newItem = {
       ...newItem,
       id: docRef.id,
-      timestamp,
+      createdAt: timestamp,
     };
     return newItem;
   } catch (error) {
@@ -83,10 +89,10 @@ export async function addItem(newItem: BuyItem): Promise<BuyItem | null> {
   }
 }
 
-export async function updateItem(item: BuyItem): Promise<BuyItem | null> {
+export async function updateItem(item: IBuyItem): Promise<IBuyItem | null> {
   try {
     const docRef = doc(colRef, item.id);
-    await updateDoc(docRef, { ...item, timestamp: Timestamp.now() });
+    await updateDoc(docRef, item as Omit<IBuyItem, "id">);
     return item;
   } catch (error) {
     console.log(`[UpdateItem]: Couldn't update item. ${error}`);
@@ -150,7 +156,6 @@ export function subscribeAuthStateChanged(
   return onAuthStateChanged(
     auth,
     (user) => {
-      console.log("User changed to: ", user);
       updateUser(user);
     },
     (error) => {

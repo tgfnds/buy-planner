@@ -1,7 +1,7 @@
 import { IconButton, ListItem, ListItemText } from "@mui/material";
 import { MouseEvent, useState } from "react";
 import { useItemContext } from "../../context/ItemContextProvider";
-import { BuyItem as BuyItemType } from "../../types";
+import { IBuyItem } from "../../types";
 import DeleteIcon from "@mui/icons-material/DeleteOutline";
 import EditIcon from "@mui/icons-material/EditOutlined";
 import CancelIcon from "@mui/icons-material/CloseOutlined";
@@ -11,7 +11,7 @@ import { useFormContext } from "../../context/FormContextProvider";
 import { defaultState as defaultFormState } from "../../context/FormContext";
 
 interface BuyItemProps {
-  item: BuyItemType;
+  item: IBuyItem;
 }
 
 const BuyItem = ({ item }: BuyItemProps) => {
@@ -28,7 +28,7 @@ const BuyItem = ({ item }: BuyItemProps) => {
     e.preventDefault();
     item.id && deleteItem(item.id);
     setIsDeleting(false);
-    if (data.id === item.id) {
+    if (data?.id === item.id) {
       setType("ADD");
       setData(defaultFormState.data);
     }
@@ -43,7 +43,6 @@ const BuyItem = ({ item }: BuyItemProps) => {
     e.preventDefault();
     setType("EDIT");
     setData({
-      id: item.id,
       name: item.name,
       value: item.value,
     });

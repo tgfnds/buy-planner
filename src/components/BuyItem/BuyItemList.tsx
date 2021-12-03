@@ -12,9 +12,9 @@ const BuyItemList = () => {
     return total;
   }
 
-  if (!items) {
+  if (!items.length) {
     return (
-      <Box p={2} textAlign="center">
+      <Box p={4} textAlign="center">
         <Typography variant="h4">Add new items!</Typography>
       </Box>
     );
@@ -25,9 +25,11 @@ const BuyItemList = () => {
       <List>
         {items && items.map((item) => <BuyItem item={item} key={item.id} />)}
       </List>
-      <Typography mr={11.5} textAlign="end" fontWeight="bold">
-        Total: {calcTotal()} €
-      </Typography>
+      {items.length > 0 && (
+        <Typography mr={11.5} textAlign="end" fontWeight="bold">
+          Total: {calcTotal()} €
+        </Typography>
+      )}
     </Box>
   );
 };

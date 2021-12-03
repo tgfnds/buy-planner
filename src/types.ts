@@ -1,25 +1,31 @@
 import { Timestamp } from "@firebase/firestore";
 
-export interface BuyItem {
+export interface IBuyItem {
   id?: string;
   name: string;
   value: string;
-  timestamp?: Timestamp;
+  userId?: string;
+  createdAt?: Timestamp;
+}
+
+export interface IBuyItemFormData {
+  name: string;
+  value: string;
 }
 
 export interface IItemState {
-  items: BuyItem[];
-  addItem: (newItem: BuyItem) => void;
+  items: IBuyItem[];
+  addItem: (newItem: IBuyItem) => void;
   deleteItem: (id: string) => void;
 }
 
-export type FormType = "ADD" | "EDIT";
+export type IFormType = "ADD" | "EDIT";
 
 export interface IFormState {
-  type: FormType;
-  data: BuyItem;
-  setType: (type: FormType) => void;
-  setData: (item: BuyItem) => void;
+  type: IFormType;
+  data: IBuyItem;
+  setType: (type: IFormType) => void;
+  setData: (item: IBuyItemFormData) => void;
 }
 
 export interface IAppState {

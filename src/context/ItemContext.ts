@@ -1,12 +1,12 @@
 import { createContext } from "react";
-import { BuyItem } from "../types";
+import { IBuyItem } from "../types";
 
 interface IItemContext {
   loading: boolean;
-  items: BuyItem[];
-  addItem: (newItem: BuyItem) => void;
+  items: IBuyItem[];
+  addItem: (newItem: IBuyItem) => void;
   deleteItem: (id: string) => void;
-  updateItem: (item: BuyItem) => void;
+  updateItem: (item: IBuyItem) => void;
 }
 
 export const defaultState = {

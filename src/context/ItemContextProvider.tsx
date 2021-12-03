@@ -6,19 +6,21 @@ import {
   deleteItem as deleteItemFirebase,
   updateItem as updateItemFirebase,
 } from "../api/firebase";
-import { BuyItem } from "../types";
+import { IBuyItem } from "../types";
+import { useAuthContext } from "./AuthContextProvider";
 
 export const useItemContext = () => useContext(ItemContext);
 
 const ItemContextProvider: FC = ({ children }) => {
+  const { user } = useAuthContext();
   const [loading, setLoading] = useState(defaultState.loading);
-  const [items, setItems] = useState<BuyItem[]>(defaultState.items);
+  const [items, setItems] = useState<IBuyItem[]>(defaultState.items);
 
   /**
    * Adds a new item to firebase and updates state.
    * @param newItem New item to add.
    */
-  async function addItem(newItem: BuyItem) {
+  async function addItem(newItem: IBuyItem) {
     setLoading(true);
     try {
       const item = await addItemFirebase(newItem);
@@ -48,7 +50,7 @@ const ItemContextProvider: FC = ({ children }) => {
    * Updates an item to the database and updates state.
    * @param item Updated item.
    */
-  async function updateItem(item: BuyItem) {
+  async function updateItem(item: IBuyItem) {
     setLoading(true);
     try {
       const updated = await updateItemFirebase(item);
@@ -67,7 +69,7 @@ const ItemContextProvider: FC = ({ children }) => {
   useEffect(() => {
     async function fetch() {
       try {
-        const items = await fetchItemsFirebase();
+        const items = await fetchItemsFirebase(user?.uid ?? "");
         if (items) setItems(items);
         setLoading(false);
       } catch (error) {
@@ -75,7 +77,7 @@ const ItemContextProvider: FC = ({ children }) => {
       }
     }
     fetch();
-  }, []);
+  }, [user?.uid]);
 
   return (
     <ItemContext.Provider

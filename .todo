@@ -26,9 +26,11 @@ Project:
     ☐ Add error messages for sign in/up. @est(2h)
     Can map firebase error codes to my messages.
     ✔ Add the onAuthStateChange event from firebase. @est(2h) @high @started(21-12-03 15:48) @done(21-12-03 16:21) @lasted(33m47s)
-    ☐ Require user to be authenticated to add items. @est(2h) @high
+    ✔ Require user to be authenticated to add items. @est(2h) @high @started(21-12-03 16:25) @done(21-12-03 18:41) @lasted(2h16m13s)
+      ☐ Guarantee that you need a user in the firebase rules thingy. @est(2h) @critical
     And also add an identifier to each items added.
     Firebase has a uid for each user.
+    ✔ Also query only items that are from user. @est(1h) @high @done(21-12-03 18:41)
     ✔ Persist login on refreshes. @critical @started(21-12-02 23:22) @done(21-12-03 00:45) @lasted(1h23m45s)
     ☐ Add realtime read from collection snapshot. (onSnapshot) @high 
     ☐ Add a limit of 100 items per account. @low
@@ -37,8 +39,12 @@ Project:
     The 100 should be smaller than the actual amount of items.
     ✔ Redirect unknown urls to home ("/"). @started(21-12-03 13:29) @done(21-12-03 13:48) @lasted(19m2s)
     ☐ Add email verification. @high
+    ☐ Change app name in index.html and other stuff that should be needed.  @low
 
   Bugs:
+    ☐ Might consider Timestamp.now() a bug.
+    It should probably be serverTimestamp(), just need to find a way to
+    convert FieldValue to Timestamp type. Maybe casting works.
     ☐ Missing userId from items added. @high
     ✔ Fix delete button overlapping the list border. @done(21-12-01 13:32)
     Align the buttons to the right of the item name.

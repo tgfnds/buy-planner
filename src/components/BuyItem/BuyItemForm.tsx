@@ -1,20 +1,23 @@
 import { Button, InputAdornment, TextField } from "@mui/material";
 import { Box } from "@mui/system";
 import { ChangeEvent, MouseEvent, useEffect, useRef } from "react";
+import { useAuthContext } from "../../context/AuthContextProvider";
 import { defaultState } from "../../context/FormContext";
 import { useFormContext } from "../../context/FormContextProvider";
 import { useItemContext } from "../../context/ItemContextProvider";
+import { IBuyItem } from "../../types";
 
 const BuyItemForm = () => {
-  const { type, data: item, setData: setItem, setType } = useFormContext();
+  const { type, data, setData, setType } = useFormContext();
   const { addItem, updateItem } = useItemContext();
+  const { user } = useAuthContext();
 
   const nameRef = useRef<HTMLInputElement | null>(null);
 
-  const isSubmitDisabled = () => (!item.name || !item.value) ?? true;
+  const isSubmitDisabled = () => (!data.name || !data.value) ?? true;
 
   function onClear() {
-    setItem(defaultState.data);
+    setData(defaultState.data);
     setType("ADD");
   }
 
@@ -25,25 +28,35 @@ const BuyItemForm = () => {
 
     if (pattern) {
       if (value.match(pattern)) {
-        setItem({
-          ...item,
+        setData({
+          ...data,
           [e.target.name]: value,
         });
       }
       return;
     }
 
-    setItem({
-      ...item,
+    setData({
+      ...data,
       [e.target.name]: value,
     });
   }
 
   function onSubmit(e: MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
-    if (type === "ADD") addItem(item);
-    else if (type === "EDIT") updateItem(item);
-    setItem(defaultState.data);
+    if (type === "ADD") {
+      const newItem: IBuyItem = {
+        ...data,
+        userId: user?.uid,
+      };
+      addItem(newItem);
+    } else if (type === "EDIT") {
+      const newItem: IBuyItem = {
+        ...data,
+      };
+      updateItem(newItem);
+    }
+    setData(defaultState.data);
     nameRef.current?.focus();
     setType("ADD");
   }
@@ -60,7 +73,7 @@ const BuyItemForm = () => {
         size="small"
         name="name"
         label="Name"
-        value={item.name}
+        value={data.name}
         onChange={onChange}
         inputProps={{ pattern: "^.{0,100}$" }}
         variant="outlined"
@@ -70,7 +83,7 @@ const BuyItemForm = () => {
         size="small"
         name="value"
         label="Value"
-        value={item.value}
+        value={data.value}
         onChange={onChange}
         inputProps={{ inputMode: "numeric", pattern: "^[0-9]{0,10}$" }}
         variant="outlined"
