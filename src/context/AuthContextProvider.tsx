@@ -32,10 +32,10 @@ const AuthContextProvider: FC = ({ children }) => {
     setLoading(false);
   }
 
-  async function signUp(email: string, password: string) {
+  async function signUp(email: string, password: string, displayName: string) {
     setLoading(true);
     try {
-      await signUpFirebase(email, password);
+      await signUpFirebase(email, password, displayName);
     } catch (error) {
       console.log(`Couldn't sign up. ${error}`);
     }

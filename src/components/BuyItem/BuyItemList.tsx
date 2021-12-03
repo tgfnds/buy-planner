@@ -5,12 +5,12 @@ import BuyItem from "./BuyItem";
 const BuyItemList = () => {
   const { items } = useItemContext();
 
-  function calcTotal() {
-    if (!items.length) return;
-    const values = items.map((item) => Number(item.value));
-    const total = values.reduce((pv, cv) => (pv += cv));
-    return total;
-  }
+  // function calcTotal() {
+  //   if (!items.length) return;
+  //   const values = items.map((item) => Number(item.value));
+  //   const total = values.reduce((pv, cv) => (pv += cv));
+  //   return total;
+  // }
 
   if (!items.length) {
     return (
@@ -25,11 +25,6 @@ const BuyItemList = () => {
       <List>
         {items && items.map((item) => <BuyItem item={item} key={item.id} />)}
       </List>
-      {items.length > 0 && (
-        <Typography mr={11.5} textAlign="end" fontWeight="bold">
-          Total: {calcTotal()} €
-        </Typography>
-      )}
     </Box>
   );
 };

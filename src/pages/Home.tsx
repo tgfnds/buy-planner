@@ -1,4 +1,5 @@
 import { Box } from "@mui/material";
+import BuyItemCounter from "../components/BuyItem/BuyItemCounter";
 import BuyItemForm from "../components/BuyItem/BuyItemForm";
 import BuyItemList from "../components/BuyItem/BuyItemList";
 import ProgressBar from "../components/ui/ProgressBar";
@@ -30,6 +31,7 @@ const Home = () => {
             <ProgressBar />
             <BuyItemList />
           </Box>
+          <BuyItemCounter />
         </Box>
       </FormContextProvider>
     </ItemContextProvider>

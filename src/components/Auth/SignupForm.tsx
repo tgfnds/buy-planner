@@ -8,12 +8,14 @@ interface FormState {
   email: string;
   password: string;
   confirmPassword: string;
+  username: string;
 }
 
 const defaultFormState: FormState = {
   email: "",
   password: "",
   confirmPassword: "",
+  username: "",
 };
 
 const SignupForm = () => {
@@ -47,7 +49,7 @@ const SignupForm = () => {
     }
     setLoading(true);
     try {
-      await signUp(formState.email, formState.password);
+      await signUp(formState.email, formState.password, formState.username);
     } catch (error) {
       // TODO: Show an alert or something.
       console.log(`Couldn't signup. ${error}`);
@@ -89,6 +91,14 @@ const SignupForm = () => {
             label="Email"
             type="email"
             value={formState.email}
+            onChange={onChange}
+            variant="outlined"
+          />
+          <TextField
+            size="small"
+            name="username"
+            label="Name"
+            value={formState.username}
             onChange={onChange}
             variant="outlined"
           />

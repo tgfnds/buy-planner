@@ -6,6 +6,7 @@ import {
   signInWithEmailAndPassword,
   signOut as signOutFirebase,
   User,
+  updateProfile as updateProfileFirebase,
 } from "firebase/auth";
 import {
   getFirestore,
@@ -65,8 +66,7 @@ export async function fetchItems(userId: string): Promise<IBuyItem[] | null> {
     }));
     return items;
   } catch (error) {
-    console.log(`[FetchItems]: Couldn't fetch items. ${error}`);
-    return null;
+    throw new Error((error as FirebaseError).message);
   }
 }
 
@@ -84,8 +84,7 @@ export async function addItem(newItem: IBuyItem): Promise<IBuyItem | null> {
     };
     return newItem;
   } catch (error) {
-    console.log(`[AddItem]: Couldn't add item. ${error}`);
-    return null;
+    throw new Error((error as FirebaseError).message);
   }
 }
 
@@ -95,8 +94,7 @@ export async function updateItem(item: IBuyItem): Promise<IBuyItem | null> {
     await updateDoc(docRef, item as Omit<IBuyItem, "id">);
     return item;
   } catch (error) {
-    console.log(`[UpdateItem]: Couldn't update item. ${error}`);
-    return null;
+    throw new Error((error as FirebaseError).message);
   }
 }
 
@@ -106,14 +104,14 @@ export async function deleteItem(id: string): Promise<string | null> {
     await deleteDoc(docRef);
     return id;
   } catch (error) {
-    console.log(`[DeleteItem]: Couldn't delete item. ${error}`);
-    return null;
+    throw new Error((error as FirebaseError).message);
   }
 }
 
 export async function signUp(
   email: string,
-  password: string
+  password: string,
+  displayName: string
 ): Promise<User | null> {
   try {
     const credentials = await createUserWithEmailAndPassword(
@@ -122,9 +120,13 @@ export async function signUp(
       password
     );
 
+    if (credentials.user) {
+      await updateProfile(credentials.user, displayName);
+    }
+
     return credentials.user;
   } catch (error) {
-    return handleError(error as FirebaseError);
+    throw new Error((error as FirebaseError).message);
   }
 }
 
@@ -137,16 +139,15 @@ export async function signIn(
 
     return credentials.user;
   } catch (error) {
-    return handleError(error as FirebaseError);
+    throw new Error((error as FirebaseError).message);
   }
 }
 
 export async function signOut() {
   try {
     await signOutFirebase(auth);
-    return null;
   } catch (error) {
-    return handleError(error as FirebaseError);
+    throw new Error((error as FirebaseError).message);
   }
 }
 
@@ -164,7 +165,12 @@ export function subscribeAuthStateChanged(
   );
 }
 
-function handleError(error: FirebaseError) {
-  console.log(`[${error.code}] ${error.message}`);
-  return null;
+export async function updateProfile(user: User, displayName: string) {
+  try {
+    await updateProfileFirebase(user, {
+      displayName,
+    });
+  } catch (error) {
+    throw new Error((error as FirebaseError).message);
+  }
 }

@@ -41,7 +41,7 @@ const MainLayout = () => {
         >
           <Typography variant="h3">BuyPlanner</Typography>
           <Box display="flex" flexDirection="column" alignItems="end">
-            <Typography mb={1}>Welcome, {user?.email}</Typography>
+            <Typography mb={1}>Logged as {user?.displayName}</Typography>
             <Button
               color="secondary"
               variant="outlined"
