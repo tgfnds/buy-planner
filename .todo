@@ -15,21 +15,42 @@ Project:
       ✔ Implement provider and create UI. @est(1h) @started(21-12-01 18:47) @done(21-12-01 19:03) @lasted(16m5s)
     ✔ Create a form context. @started(21-12-01 14:45) @done(21-12-01 16:11) @lasted(1h26m24s)
     ✔ Add a timestamp to order items in firebase and in the ui. @est(1h) @done(21-12-01 20:52)
-    ☐ Add undo functionality. @est(8h)
-    ☐ Add authentication and authorization.
-      ☐ Study how to implement firebase auth system. @est(1h)
-      ☐ Create a auth context maybe? @est(2h)
-      ☐ Make the UI. @est(2h)
-    ☐ Add a total at the end of the list.
+    ☐ Add undo functionality. @est(8h) @low
+    ✔ Add authentication and authorization. @critical @done(21-12-02 23:21)
+      ✔ Study how to implement firebase auth system. @est(1h) @started(21-12-02 15:09) @done(21-12-02 15:36) @lasted(27m36s)
+      ✔ Create auth functions. @est(2h) @started(21-12-02 15:09) @done(21-12-02 15:36) @lasted(27m36s)
+      ✔ Make the UI. @est(2h) @started(21-12-02 15:36) @done(21-12-02 23:21) @lasted(7h45m38s)
+    ✔ Add a total at the end of the list. @started(21-12-01 21:22) @done(21-12-02 13:26) @lasted(16h4m2s)
+    ✔ Add react-router for signup, signin and the index page. @done(21-12-02 23:21)
+    ☐ Add a display name to the user. @critical @est(30m)
+    ☐ Add error messages for sign in/up.
+    Can map firebase error codes to my messages.
+    ☐ Require user to be authenticated to add items. @critical
+    And also add an identifier to each items added.
+    Firebase has a uid for each user.
+    ✔ Persist login on refreshes. @critical @started(21-12-02 23:22) @done(21-12-03 00:45) @lasted(1h23m45s)
+    ☐ Add realtime read from collection snapshot. (onSnapshot) @high 
+    ☐ Add a limit of 100 items per account. @low
+    Also show a counter in the bottom right of the list: ex. 7/100
+    The 100 should be smaller than the actual amount of items.
+    ✔ Redirect unknown urls to home ("/"). @started(21-12-03 13:29) @done(21-12-03 13:48) @lasted(19m2s)
 
   Bugs:
+    ☐ Missing userId from items added. @critical
     ✔ Fix delete button overlapping the list border. @done(21-12-01 13:32)
     Align the buttons to the right of the item name.
-    ☐ Cannot add ',' or '.' to values.
+    ☐ Cannot add ',' or '.' to values. @high
     Change how validation works to use maybe the Number() validation from
     typescript. This might be better than use the pattern attribute.
+    ✔ Page redirect from "nonExisting" routes shows home component. @started(21-12-03 14:53) @done(21-12-03 15:36) @lasted(43m10s)
+    When going to a nonExisting route without a session, looks like it loads
+    the Home component for a split second before going to the signin.
 
   Changes (Thoughts):
     ☐ Think about a name change to the project.
     ☐ Change List to Table.
     Think about this.
+    ☐ (maybe not) Change list item actions button colors to something darker. @low
+    Make it more low profile.
+    ☐ Implement Google OAuth.
+    ☐ Add some animations.

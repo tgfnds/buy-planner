@@ -1,4 +1,11 @@
-import { initializeApp } from "firebase/app";
+import { initializeApp, FirebaseOptions } from "firebase/app";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut as signOutFirebase,
+  User,
+} from "firebase/auth";
 import {
   getFirestore,
   collection,
@@ -13,20 +20,22 @@ import {
   WithFieldValue,
   Timestamp,
 } from "firebase/firestore";
+import { FirebaseError } from "@firebase/util";
 import { BuyItem } from "../types";
-import { FirebaseConfig } from "./types";
 
-const firebaseConfig: FirebaseConfig = {
-  apikey: process.env.REACT_APP_API_KEY,
+const firebaseConfig: FirebaseOptions = {
+  apiKey: process.env.REACT_APP_API_KEY,
   authDomain: process.env.REACT_APP_AUTH_DOMAIN,
   projectId: process.env.REACT_APP_PROJECT_ID,
   storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
-  messageingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
+  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
   appId: process.env.REACT_APP_APP_ID,
 };
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+initializeApp(firebaseConfig);
+
+const db = getFirestore();
+const auth = getAuth();
 
 function converter<T>() {
   return {
@@ -93,4 +102,48 @@ export async function deleteItem(id: string): Promise<string | null> {
     console.log(`[DeleteItem]: Couldn't delete item. ${error}`);
     return null;
   }
+}
+
+export async function signUp(
+  email: string,
+  password: string
+): Promise<User | null> {
+  try {
+    const credentials = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+
+    return credentials.user;
+  } catch (error) {
+    return handleError(error as FirebaseError);
+  }
+}
+
+export async function signIn(
+  email: string,
+  password: string
+): Promise<User | null> {
+  try {
+    const credentials = await signInWithEmailAndPassword(auth, email, password);
+
+    return credentials.user;
+  } catch (error) {
+    return handleError(error as FirebaseError);
+  }
+}
+
+export async function signOut() {
+  try {
+    await signOutFirebase(auth);
+    return null;
+  } catch (error) {
+    return handleError(error as FirebaseError);
+  }
+}
+
+function handleError(error: FirebaseError) {
+  console.log(`[${error.code}] ${error.message}`);
+  return null;
 }
