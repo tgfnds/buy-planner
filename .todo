@@ -43,6 +43,9 @@ Project:
     ☐ Add email verification. @high
     ☐ Change app name in index.html and other stuff that should be needed.  @low
     ☐ Add form validations. @est(2h) @critical
+    ☐ Publish on netlify or find another free publisher.
+    Maybe place it under buy.tgfnds.dev.
+    ✔ Should I save the User object in localStorage? @est(30m) @critical @done(21-12-06 16:43)
 
   Bugs:
     ☐ Shows "add new items" even when first loading items. @high

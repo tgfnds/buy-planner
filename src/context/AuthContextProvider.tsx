@@ -1,6 +1,7 @@
 import { User } from "@firebase/auth";
 import { FC, useContext, useEffect, useState } from "react";
 import {
+  getUserInfo,
   signIn as signInFirebase,
   signOut as signOutFirebase,
   signUp as signUpFirebase,
@@ -13,14 +14,8 @@ const STORAGE_USER_KEY = "user";
 export const useAuthContext = () => useContext(AuthContext);
 
 const AuthContextProvider: FC = ({ children }) => {
-  const [user, setUser] = useState(loadUserFromStorageOrDefault());
+  const [user, setUser] = useState(defaultState.user);
   const [loading, setLoading] = useState(defaultState.loading);
-
-  function loadUserFromStorageOrDefault() {
-    const userItem = localStorage.getItem(STORAGE_USER_KEY);
-    if (userItem) return JSON.parse(userItem) as User;
-    return defaultState.user;
-  }
 
   async function signIn(email: string, password: string) {
     setLoading(true);
@@ -53,8 +48,6 @@ const AuthContextProvider: FC = ({ children }) => {
   }
 
   function updateUser(user: User | null) {
-    if (user) localStorage.setItem(STORAGE_USER_KEY, JSON.stringify(user));
-    else localStorage.removeItem(STORAGE_USER_KEY);
     setUser(user);
   }
 

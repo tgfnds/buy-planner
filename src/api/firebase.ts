@@ -160,7 +160,7 @@ export function subscribeAuthStateChanged(
       updateUser(user);
     },
     (error) => {
-      console.log(`[OnAuthStateChanged] ${error.message}`);
+      throw new Error((error as FirebaseError).message);
     }
   );
 }
@@ -173,4 +173,8 @@ export async function updateProfile(user: User, displayName: string) {
   } catch (error) {
     throw new Error((error as FirebaseError).message);
   }
+}
+
+export function getUserInfo(): User | null {
+  return auth.currentUser;
 }
