@@ -174,7 +174,3 @@ export async function updateProfile(user: User, displayName: string) {
     throw new Error((error as FirebaseError).message);
   }
 }
-
-export function getUserInfo(): User | null {
-  return auth.currentUser;
-}

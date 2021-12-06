@@ -1,15 +1,12 @@
 import { User } from "@firebase/auth";
 import { FC, useContext, useEffect, useState } from "react";
 import {
-  getUserInfo,
   signIn as signInFirebase,
   signOut as signOutFirebase,
   signUp as signUpFirebase,
   subscribeAuthStateChanged,
 } from "../api/firebase";
 import AuthContext, { defaultState } from "./AuthContext";
-
-const STORAGE_USER_KEY = "user";
 
 export const useAuthContext = () => useContext(AuthContext);
 

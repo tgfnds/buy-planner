@@ -5,7 +5,6 @@ import {
   addItem as addItemFirebase,
   deleteItem as deleteItemFirebase,
   updateItem as updateItemFirebase,
-  getUserInfo,
 } from "../api/firebase";
 import { IBuyItem } from "../types";
 import { useAuthContext } from "./AuthContextProvider";
@@ -13,6 +12,7 @@ import { useAuthContext } from "./AuthContextProvider";
 export const useItemContext = () => useContext(ItemContext);
 
 const ItemContextProvider: FC = ({ children }) => {
+  const { user } = useAuthContext();
   const [loading, setLoading] = useState(defaultState.loading);
   const [items, setItems] = useState<IBuyItem[]>(defaultState.items);
 
@@ -69,7 +69,7 @@ const ItemContextProvider: FC = ({ children }) => {
   useEffect(() => {
     async function fetch() {
       try {
-        const items = await fetchItemsFirebase(getUserInfo()?.uid ?? "");
+        const items = await fetchItemsFirebase(user?.uid ?? "");
         if (items) setItems(items);
         setLoading(false);
       } catch (error) {
@@ -77,7 +77,7 @@ const ItemContextProvider: FC = ({ children }) => {
       }
     }
     fetch();
-  }, [getUserInfo()?.uid]);
+  }, [user?.uid]);
 
   return (
     <ItemContext.Provider
