@@ -11,7 +11,6 @@ import NoMatch from "../NoMatch/NoMatch";
 import { routes } from "../../routes";
 
 function App() {
-  console.log("testing git");
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
