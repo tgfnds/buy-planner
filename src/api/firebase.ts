@@ -1,11 +1,11 @@
 import { initializeApp, FirebaseOptions } from "firebase/app";
 import {
+  User,
   getAuth,
   onAuthStateChanged,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut as signOutFirebase,
-  User,
   updateProfile as updateProfileFirebase,
 } from "firebase/auth";
 import {

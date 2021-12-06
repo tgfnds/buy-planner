@@ -1,4 +1,3 @@
-import { User } from "@firebase/auth";
 import { FC, useContext, useEffect, useState } from "react";
 import {
   signIn as signInFirebase,
@@ -20,8 +19,9 @@ const AuthContextProvider: FC = ({ children }) => {
       await signInFirebase(email, password);
     } catch (error) {
       console.log(`Couldn't sign in. ${error}`);
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   }
 
   async function signUp(email: string, password: string, displayName: string) {
@@ -30,8 +30,9 @@ const AuthContextProvider: FC = ({ children }) => {
       await signUpFirebase(email, password, displayName);
     } catch (error) {
       console.log(`Couldn't sign up. ${error}`);
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   }
 
   async function signOut() {
@@ -40,16 +41,16 @@ const AuthContextProvider: FC = ({ children }) => {
       await signOutFirebase();
     } catch (error) {
       console.log(`Couldn't sign in. ${error}`);
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
-  }
-
-  function updateUser(user: User | null) {
-    setUser(user);
   }
 
   useEffect(() => {
-    const unsubscribe = subscribeAuthStateChanged(updateUser);
+    const unsubscribe = subscribeAuthStateChanged((user) => {
+      setUser(user);
+      setLoading(false);
+    });
     return () => unsubscribe();
   }, []);
 

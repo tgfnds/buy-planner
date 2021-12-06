@@ -18,7 +18,7 @@ interface AuthState {
 export const defaultState: AuthState = {
   user: null,
   setUser: () => null,
-  loading: false,
+  loading: true,
   setLoading: () => null,
   signIn: async () => {},
   signUp: async () => {},

@@ -1,9 +1,9 @@
-import { List, Typography, Box } from "@mui/material";
+import { List, Typography, Box, CircularProgress } from "@mui/material";
 import { useItemContext } from "../../context/ItemContextProvider";
 import BuyItem from "./BuyItem";
 
 const BuyItemList = () => {
-  const { items } = useItemContext();
+  const { items, loading } = useItemContext();
 
   // function calcTotal() {
   //   if (!items.length) return;
@@ -11,6 +11,14 @@ const BuyItemList = () => {
   //   const total = values.reduce((pv, cv) => (pv += cv));
   //   return total;
   // }
+
+  if (loading && !items.length) {
+    return (
+      <Box p={4} textAlign="center">
+        <CircularProgress />
+      </Box>
+    );
+  }
 
   if (!items.length) {
     return (

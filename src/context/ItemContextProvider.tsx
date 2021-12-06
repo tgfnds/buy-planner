@@ -14,7 +14,7 @@ export const useItemContext = () => useContext(ItemContext);
 const ItemContextProvider: FC = ({ children }) => {
   const { user } = useAuthContext();
   const [loading, setLoading] = useState(defaultState.loading);
-  const [items, setItems] = useState<IBuyItem[]>(defaultState.items);
+  const [items, setItems] = useState(defaultState.items);
 
   /**
    * Adds a new item to firebase and updates state.
@@ -77,7 +77,7 @@ const ItemContextProvider: FC = ({ children }) => {
       }
     }
     fetch();
-  }, [user?.uid]);
+  }, [user]);
 
   return (
     <ItemContext.Provider

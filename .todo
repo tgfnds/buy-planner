@@ -46,9 +46,13 @@ Project:
     ☐ Publish on netlify or find another free publisher.
     Maybe place it under buy.tgfnds.dev.
     ✔ Should I save the User object in localStorage? @est(30m) @critical @done(21-12-06 16:43)
+    ✔ Refactor RequiresAuth and Header. @est(1h) @critical @done(21-12-06 22:20)
+    Maybe create a PrivateRoute component that receives an Element to simplify
+    the Router.
 
   Bugs:
-    ☐ Shows "add new items" even when first loading items. @high
+    ✔ Redirects to SignIn before loading user from firebase. @high @started(21-12-06 18:31) @done(21-12-06 22:21) @lasted(3h50m1s)
+    ✔ Shows "add new items" even when first loading items. @high @done(21-12-06 22:57)
     ☐ Might consider Timestamp.now() a bug.
     It should probably be serverTimestamp(), just need to find a way to
     convert FieldValue to Timestamp type. Maybe casting works.

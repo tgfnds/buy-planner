@@ -11,7 +11,7 @@ interface IItemContext {
 
 export const defaultState = {
   loading: true,
-  items: [],
+  items: [] as IBuyItem[],
   addItem: () => null,
   deleteItem: () => null,
   updateItem: () => null,
