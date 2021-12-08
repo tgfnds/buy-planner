@@ -10,12 +10,12 @@ import { Box } from "@mui/system";
 import { useFormContext } from "../../context/FormContextProvider";
 import { defaultState as defaultFormState } from "../../context/FormContext";
 
-interface BuyItemProps {
+interface IBuyItemProps {
   item: IBuyItem;
 }
 
-const BuyItem = ({ item }: BuyItemProps) => {
-  const { setType, setData, data } = useFormContext();
+const BuyItem = ({ item }: IBuyItemProps) => {
+  const { setEditItem, editItem } = useFormContext();
   const { deleteItem } = useItemContext();
   const [isDeleting, setIsDeleting] = useState(false);
 
@@ -28,9 +28,8 @@ const BuyItem = ({ item }: BuyItemProps) => {
     e.preventDefault();
     item.id && deleteItem(item.id);
     setIsDeleting(false);
-    if (data?.id === item.id) {
-      setType("ADD");
-      setData(defaultFormState.data);
+    if (editItem?.id === item.id) {
+      setEditItem(defaultFormState.editItem);
     }
   }
 
@@ -41,11 +40,7 @@ const BuyItem = ({ item }: BuyItemProps) => {
 
   function onEdit(e: MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
-    setType("EDIT");
-    setData({
-      name: item.name,
-      value: item.value,
-    });
+    setEditItem(item);
   }
 
   return (

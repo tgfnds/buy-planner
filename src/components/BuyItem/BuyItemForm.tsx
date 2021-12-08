@@ -1,81 +1,93 @@
 import { Button, InputAdornment, TextField } from "@mui/material";
 import { Box } from "@mui/system";
-import { ChangeEvent, MouseEvent, useEffect, useRef } from "react";
+import { ChangeEvent, FormEvent, useEffect, useRef } from "react";
 import { useAuthContext } from "../../context/AuthContextProvider";
 import { defaultState } from "../../context/FormContext";
 import { useFormContext } from "../../context/FormContextProvider";
 import { useItemContext } from "../../context/ItemContextProvider";
 import { IBuyItem } from "../../types";
+import { useFormik } from "formik";
+import { BuyItemSchema } from "../../schemas/BuyItemSchema";
 
 const BuyItemForm = () => {
-  const { type, data, setData, setType } = useFormContext();
+  const { editItem, setEditItem } = useFormContext();
   const { addItem, updateItem } = useItemContext();
   const { user } = useAuthContext();
+  const {
+    resetForm,
+    setValues,
+    submitForm,
+    values,
+    touched,
+    errors,
+    handleChange,
+    handleBlur,
+    isValid,
+  } = useFormik<IBuyItem>({
+    initialValues: {
+      name: editItem ? editItem.name : "",
+      value: editItem ? editItem.value : "",
+    },
+    validationSchema: BuyItemSchema,
+    onSubmit: (values) => {
+      if (!editItem) {
+        const newItem: IBuyItem = {
+          name: values.name,
+          value: values.value,
+          userId: user?.uid,
+        };
+        addItem(newItem);
+      } else {
+        const newItem: IBuyItem = {
+          ...editItem,
+          name: values.name,
+          value: values.value,
+        };
+        updateItem(newItem);
+      }
+      setEditItem(defaultState.editItem);
+      resetForm();
+    },
+  });
 
   const nameRef = useRef<HTMLInputElement | null>(null);
 
-  const isSubmitDisabled = () => (!data.name || !data.value) ?? true;
-
   function onClear() {
-    setData(defaultState.data);
-    setType("ADD");
-  }
-
-  function onChange(e: ChangeEvent<HTMLInputElement>) {
-    e.preventDefault();
-    const pattern = e.target.pattern;
-    const value = e.target.value;
-
-    if (pattern) {
-      if (value.match(pattern)) {
-        setData({
-          ...data,
-          [e.target.name]: value,
-        });
-      }
-      return;
-    }
-
-    setData({
-      ...data,
-      [e.target.name]: value,
-    });
-  }
-
-  function onSubmit(e: MouseEvent<HTMLButtonElement>) {
-    e.preventDefault();
-    if (type === "ADD") {
-      const newItem: IBuyItem = {
-        ...data,
-        userId: user?.uid,
-      };
-      addItem(newItem);
-    } else if (type === "EDIT") {
-      const newItem: IBuyItem = {
-        ...data,
-      };
-      updateItem(newItem);
-    }
-    setData(defaultState.data);
-    nameRef.current?.focus();
-    setType("ADD");
+    setEditItem(defaultState.editItem);
+    resetForm();
   }
 
   useEffect(() => {
+    if (editItem) {
+      setValues(editItem, false);
+    } else {
+      resetForm();
+    }
     nameRef.current?.focus();
-  }, [type]);
+  }, [editItem, setValues, resetForm]);
 
   return (
-    <Box component="form" noValidate autoComplete="off" display="flex" gap={2}>
+    <Box
+      component="form"
+      onSubmit={(e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        submitForm();
+      }}
+      noValidate
+      autoComplete="off"
+      display="flex"
+      gap={2}
+    >
       <TextField
         sx={{ flex: 3 }}
         inputRef={nameRef}
         size="small"
         name="name"
         label="Name"
-        value={data.name}
-        onChange={onChange}
-        inputProps={{ pattern: "^.{0,100}$" }}
+        value={values.name}
+        onChange={handleChange}
+        error={touched.name && values.name.length > 0 && Boolean(errors.name)}
+        inputProps={{ onBlur: handleBlur }}
         variant="outlined"
       />
       <TextField
@@ -83,28 +95,36 @@ const BuyItemForm = () => {
         size="small"
         name="value"
         label="Value"
-        value={data.value}
-        onChange={onChange}
-        inputProps={{ inputMode: "numeric", pattern: "^[0-9]{0,10}$" }}
+        value={values.value}
+        onChange={(e: ChangeEvent<HTMLInputElement>) => {
+          if (e.target.value.match(e.target.pattern)) handleChange(e);
+        }}
+        error={
+          touched.value && values.value.length > 0 && Boolean(errors.value)
+        }
+        inputProps={{
+          inputMode: "numeric",
+          pattern: "^[0-9.]{0,12}$",
+          onBlur: handleBlur,
+        }}
         variant="outlined"
         InputProps={{
           endAdornment: <InputAdornment position="end">€</InputAdornment>,
         }}
       />
       <Box display="flex" gap={1}>
-        {type === "EDIT" && (
+        {editItem && (
           <Button variant="outlined" color="error" onClick={onClear}>
             Clear
           </Button>
         )}
         <Button
           variant="outlined"
-          onClick={onSubmit}
           type="submit"
           color="success"
-          disabled={isSubmitDisabled()}
+          disabled={!isValid}
         >
-          {type === "ADD" ? "ADD" : "SAVE"}
+          {editItem ? "SAVE" : "ADD"}
         </Button>
       </Box>
     </Box>

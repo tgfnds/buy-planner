@@ -3,13 +3,13 @@ import BuyItemCounter from "../components/BuyItem/BuyItemCounter";
 import BuyItemForm from "../components/BuyItem/BuyItemForm";
 import BuyItemList from "../components/BuyItem/BuyItemList";
 import ProgressBar from "../components/ui/ProgressBar";
-import FormContextProvider from "../context/FormContextProvider";
+import FormProvider from "../context/FormContextProvider";
 import ItemContextProvider from "../context/ItemContextProvider";
 
 const Home = () => {
   return (
     <ItemContextProvider>
-      <FormContextProvider>
+      <FormProvider>
         <Box
           display="flex"
           flexDirection="column"
@@ -33,7 +33,7 @@ const Home = () => {
           </Box>
           <BuyItemCounter />
         </Box>
-      </FormContextProvider>
+      </FormProvider>
     </ItemContextProvider>
   );
 };

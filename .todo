@@ -49,6 +49,10 @@ Project:
     ✔ Refactor RequiresAuth and Header. @est(1h) @critical @done(21-12-06 22:20)
     Maybe create a PrivateRoute component that receives an Element to simplify
     the Router.
+    ✔ Continue implementation of formik on BuyItemForm. @est(1h) @high @started(21-12-08 18:14) @done(21-12-08 18:58) @lasted(44m21s)
+    ☐ Implement formik for Signin and Signup forms. @est(1.5h) @high
+    Need to clean up FormProvider.
+    Not sending editItem values to formik initial values.
 
   Bugs:
     ✔ Redirects to SignIn before loading user from firebase. @high @started(21-12-06 18:31) @done(21-12-06 22:21) @lasted(3h50m1s)

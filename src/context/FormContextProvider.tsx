@@ -1,20 +1,16 @@
 import { FC, useContext, useState } from "react";
-import { IBuyItemFormData } from "../types";
 import FormContext, { defaultState } from "./FormContext";
 
 export const useFormContext = () => useContext(FormContext);
 
 const FormContextProvider: FC = ({ children }) => {
-  const [type, setType] = useState(defaultState.type);
-  const [data, setData] = useState<IBuyItemFormData>(defaultState.data);
+  const [editItem, setEditItem] = useState(defaultState.editItem);
 
   return (
     <FormContext.Provider
       value={{
-        type,
-        data,
-        setType,
-        setData,
+        editItem,
+        setEditItem,
       }}
     >
       {children}

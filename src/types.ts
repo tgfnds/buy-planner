@@ -19,13 +19,9 @@ export interface IItemState {
   deleteItem: (id: string) => void;
 }
 
-export type IFormType = "ADD" | "EDIT";
-
 export interface IFormState {
-  type: IFormType;
-  data: IBuyItem;
-  setType: (type: IFormType) => void;
-  setData: (item: IBuyItemFormData) => void;
+  editItem: IBuyItem | null;
+  setEditItem: (item: IBuyItem | null) => void;
 }
 
 export interface IAppState {

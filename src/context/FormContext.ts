@@ -2,13 +2,8 @@ import { createContext } from "react";
 import { IFormState } from "../types";
 
 export const defaultState: IFormState = {
-  type: "ADD",
-  data: {
-    name: "",
-    value: "",
-  },
-  setType: () => null,
-  setData: () => null,
+  editItem: null,
+  setEditItem: () => null,
 };
 
 const FormContext = createContext<IFormState>(defaultState);
