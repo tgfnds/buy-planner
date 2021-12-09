@@ -33,7 +33,7 @@ Project:
     ✔ Also query only items that are from user. @est(1h) @high @done(21-12-03 18:41)
     ✔ Persist login on refreshes. @critical @started(21-12-02 23:22) @done(21-12-03 00:45) @lasted(1h23m45s)
     ☐ Add realtime read from collection snapshot. (onSnapshot) @high 
-    ☐ Add a limit of 100 items per account. @low
+    ☐ Add a limit of 100 items per account. @high
     This seems to be impossible to do using rules. So either find a way to use
     cloud functions for free. Or limit in the client.
     ✔ Show an item counter at the bottom right of the list. @low @started(21-12-03 22:27) @done(21-12-03 23:09) @lasted(42m54s)
@@ -64,7 +64,7 @@ Project:
     ✔ Missing userId from items added. @high @done(21-12-03 21:37)
     ✔ Fix delete button overlapping the list border. @done(21-12-01 13:32)
     Align the buttons to the right of the item name.
-    ☐ Cannot add ',' or '.' to values. @low
+    ✔ Cannot add ',' or '.' to values. @low @done(21-12-09 18:55)
     Change how validation works to use maybe the Number() validation from
     typescript. This might be better than use the pattern attribute.
     ✔ Page redirect from "nonExisting" routes shows home component. @started(21-12-03 14:53) @done(21-12-03 15:36) @lasted(43m10s)
@@ -72,7 +72,7 @@ Project:
     the Home component for a split second before going to the signin.
 
   Changes (Thoughts):
-    ☐ Think about a name change to the project.
+    ✘ Think about a name change to the project. @cancelled(21-12-09 18:56)
     ☐ Change List to Table.
     Think about this.
     ☐ (maybe not) Change list item actions button colors to something darker. @low
