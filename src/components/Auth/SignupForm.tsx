@@ -1,8 +1,11 @@
-import { Box, Button, CircularProgress, TextField } from "@mui/material";
-import { ChangeEvent, MouseEvent, useEffect, useRef, useState } from "react";
+import { Alert, Box, Button, CircularProgress, TextField } from "@mui/material";
+import { useFormik } from "formik";
+import { MouseEvent, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useFirebaseErrors } from "../../api/useFirebaseErrors";
 import { useAuthContext } from "../../context/AuthContextProvider";
 import { routes } from "../../routes";
+import { SignupSchema } from "../../schemas/SignupSchema";
 
 interface FormState {
   email: string;
@@ -11,30 +14,32 @@ interface FormState {
   username: string;
 }
 
-const defaultFormState: FormState = {
-  email: "",
-  password: "",
-  confirmPassword: "",
-  username: "",
-};
-
 const SignupForm = () => {
   const navigate = useNavigate();
-  const [formState, setFormState] = useState<FormState>(defaultFormState);
+  const { getErrorMessage } = useFirebaseErrors();
   const { loading, setLoading, signUp, user } = useAuthContext();
+  const [error, setError] = useState<string | null>(null);
+  const formik = useFormik<FormState>({
+    initialValues: {
+      email: "",
+      password: "",
+      confirmPassword: "",
+      username: "",
+    },
+    validationSchema: SignupSchema,
+    onSubmit: async (values) => {
+      try {
+        setLoading(true);
+        await signUp(values.email, values.password, values.username);
+      } catch (error) {
+        setError(getErrorMessage((error as Error).message));
+      } finally {
+        setLoading(false);
+      }
+    },
+  });
 
   const emailRef = useRef<HTMLInputElement | null>(null);
-
-  const isSubmitDisabled = () =>
-    !formState.email || !formState.password || !formState.confirmPassword;
-
-  function onChange(e: ChangeEvent<HTMLInputElement>) {
-    e.preventDefault();
-    setFormState({
-      ...formState,
-      [e.target.name]: e.target.value,
-    });
-  }
 
   function onCancel(e: MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
@@ -43,18 +48,7 @@ const SignupForm = () => {
 
   async function onSubmit(e: MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
-    if (formState.password !== formState.confirmPassword) {
-      return;
-      // TODO: Show error message.
-    }
-    setLoading(true);
-    try {
-      await signUp(formState.email, formState.password, formState.username);
-    } catch (error) {
-      // TODO: Show an alert or something.
-      console.log(`Couldn't signup. ${error}`);
-    }
-    setLoading(false);
+    formik.submitForm();
   }
 
   useEffect(() => {
@@ -90,16 +84,20 @@ const SignupForm = () => {
             name="email"
             label="Email"
             type="email"
-            value={formState.email}
-            onChange={onChange}
+            value={formik.values.email}
+            error={formik.touched.email && Boolean(formik.errors.email)}
+            helperText={formik.touched.email && formik.errors.email}
+            onChange={formik.handleChange}
             variant="outlined"
           />
           <TextField
             size="small"
             name="username"
             label="Name"
-            value={formState.username}
-            onChange={onChange}
+            value={formik.values.username}
+            error={formik.touched.username && Boolean(formik.errors.username)}
+            helperText={formik.touched.username && formik.errors.username}
+            onChange={formik.handleChange}
             variant="outlined"
           />
           <TextField
@@ -107,8 +105,10 @@ const SignupForm = () => {
             name="password"
             label="Password"
             type="password"
-            value={formState.password}
-            onChange={onChange}
+            value={formik.values.password}
+            error={formik.touched.password && Boolean(formik.errors.password)}
+            helperText={formik.touched.password && formik.errors.password}
+            onChange={formik.handleChange}
             variant="outlined"
           />
           <TextField
@@ -116,10 +116,22 @@ const SignupForm = () => {
             name="confirmPassword"
             label="Confirm Password"
             type="password"
-            value={formState.confirmPassword}
-            onChange={onChange}
+            value={formik.values.confirmPassword}
+            error={
+              formik.touched.confirmPassword &&
+              Boolean(formik.errors.confirmPassword)
+            }
+            helperText={
+              formik.touched.confirmPassword && formik.errors.confirmPassword
+            }
+            onChange={formik.handleChange}
             variant="outlined"
           />
+          {error && (
+            <Alert sx={{ alignItems: "center" }} severity="error">
+              {error}
+            </Alert>
+          )}
           <Box display="flex" alignItems="center" justifyContent="end" gap={1}>
             <Button variant="outlined" onClick={onCancel} color="error">
               Cancel
@@ -129,7 +141,6 @@ const SignupForm = () => {
               onClick={onSubmit}
               type="submit"
               color="success"
-              disabled={isSubmitDisabled()}
             >
               Sign Up
             </Button>

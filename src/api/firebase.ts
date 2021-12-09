@@ -112,7 +112,7 @@ export async function signUp(
   email: string,
   password: string,
   displayName: string
-): Promise<User | null> {
+): Promise<void> {
   try {
     const credentials = await createUserWithEmailAndPassword(
       auth,
@@ -123,23 +123,16 @@ export async function signUp(
     if (credentials.user) {
       await updateProfile(credentials.user, displayName);
     }
-
-    return credentials.user;
   } catch (error) {
-    throw new Error((error as FirebaseError).message);
+    throw new Error((error as FirebaseError).code);
   }
 }
 
-export async function signIn(
-  email: string,
-  password: string
-): Promise<User | null> {
+export async function signIn(email: string, password: string): Promise<void> {
   try {
-    const credentials = await signInWithEmailAndPassword(auth, email, password);
-
-    return credentials.user;
+    await signInWithEmailAndPassword(auth, email, password);
   } catch (error) {
-    throw new Error((error as FirebaseError).message);
+    throw new Error((error as FirebaseError).code);
   }
 }
 
@@ -147,7 +140,7 @@ export async function signOut() {
   try {
     await signOutFirebase(auth);
   } catch (error) {
-    throw new Error((error as FirebaseError).message);
+    throw new Error((error as FirebaseError).code);
   }
 }
 

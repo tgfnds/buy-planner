@@ -42,7 +42,7 @@ Project:
     ✔ Redirect unknown urls to home ("/"). @started(21-12-03 13:29) @done(21-12-03 13:48) @lasted(19m2s)
     ☐ Add email verification. @high
     ☐ Change app name in index.html and other stuff that should be needed.  @low
-    ☐ Add form validations. @est(2h) @critical
+    ✔ Add form validations. @est(2h) @critical @done(21-12-09 15:53)
     ☐ Publish on netlify or find another free publisher.
     Maybe place it under buy.tgfnds.dev.
     ✔ Should I save the User object in localStorage? @est(30m) @critical @done(21-12-06 16:43)
@@ -50,11 +50,12 @@ Project:
     Maybe create a PrivateRoute component that receives an Element to simplify
     the Router.
     ✔ Continue implementation of formik on BuyItemForm. @est(1h) @high @started(21-12-08 18:14) @done(21-12-08 18:58) @lasted(44m21s)
-    ☐ Implement formik for Signin and Signup forms. @est(1.5h) @high
+    ✔ Implement formik for Signin and Signup forms. @est(1.5h) @high @started(21-12-08 19:43) @done(21-12-09 15:53) @lasted(20h10m3s)
     Need to clean up FormProvider.
     Not sending editItem values to formik initial values.
 
   Bugs:
+    ☐ Doesn't have display name right after creating account. @low
     ✔ Redirects to SignIn before loading user from firebase. @high @started(21-12-06 18:31) @done(21-12-06 22:21) @lasted(3h50m1s)
     ✔ Shows "add new items" even when first loading items. @high @done(21-12-06 22:57)
     ☐ Might consider Timestamp.now() a bug.

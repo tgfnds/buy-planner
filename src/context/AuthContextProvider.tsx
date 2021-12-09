@@ -18,7 +18,7 @@ const AuthContextProvider: FC = ({ children }) => {
     try {
       await signInFirebase(email, password);
     } catch (error) {
-      console.log(`Couldn't sign in. ${error}`);
+      throw error;
     } finally {
       setLoading(false);
     }
@@ -29,7 +29,7 @@ const AuthContextProvider: FC = ({ children }) => {
     try {
       await signUpFirebase(email, password, displayName);
     } catch (error) {
-      console.log(`Couldn't sign up. ${error}`);
+      throw error;
     } finally {
       setLoading(false);
     }
@@ -40,18 +40,18 @@ const AuthContextProvider: FC = ({ children }) => {
     try {
       await signOutFirebase();
     } catch (error) {
-      console.log(`Couldn't sign in. ${error}`);
+      throw error;
     } finally {
       setLoading(false);
     }
   }
 
   useEffect(() => {
-    const unsubscribe = subscribeAuthStateChanged((user) => {
+    const unsubscribeAuthChanged = subscribeAuthStateChanged((user) => {
       setUser(user);
       setLoading(false);
     });
-    return () => unsubscribe();
+    return () => unsubscribeAuthChanged();
   }, []);
 
   return (
