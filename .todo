@@ -23,7 +23,7 @@ Project:
     ✔ Add a total at the end of the list. @started(21-12-01 21:22) @done(21-12-02 13:26) @lasted(16h4m2s)
     ✔ Add react-router for signup, signin and the index page. @done(21-12-02 23:21)
     ✔ Add a display name to the user. @high @est(30m) @started(21-12-03 21:38) @done(21-12-03 22:14) @lasted(36m8s)
-    ☐ Add error messages for sign in/up. @est(2h) @high
+    ✔ Add error messages for sign in/up. @est(2h) @high @done(21-12-09 18:15)
     Can map firebase error codes to my messages.
     ✔ Add the onAuthStateChange event from firebase. @est(2h) @high @started(21-12-03 15:48) @done(21-12-03 16:21) @lasted(33m47s)
     ✔ Require user to be authenticated to add items. @est(2h) @high @started(21-12-03 16:25) @done(21-12-03 18:41) @lasted(2h16m13s)
@@ -41,7 +41,7 @@ Project:
     The 100 should be smaller than the actual amount of items.
     ✔ Redirect unknown urls to home ("/"). @started(21-12-03 13:29) @done(21-12-03 13:48) @lasted(19m2s)
     ☐ Add email verification. @high
-    ☐ Change app name in index.html and other stuff that should be needed.  @low
+    ✔ Change app name in index.html and other stuff that should be needed.  @low @started(21-12-09 18:16) @done(21-12-09 18:54) @lasted(38m4s)
     ✔ Add form validations. @est(2h) @critical @done(21-12-09 15:53)
     ☐ Publish on netlify or find another free publisher.
     Maybe place it under buy.tgfnds.dev.
