@@ -124,28 +124,6 @@ const BuyItemForm = () => {
         decimalScale={2}
         thousandSeparator=" "
       />
-      {/* <TextField
-        sx={{ flex: 2 }}
-        size="small"
-        name="value"
-        label="Value"
-        value={values.value}
-        onChange={(e: ChangeEvent<HTMLInputElement>) => {
-          if (e.target.value.match(e.target.pattern)) handleChange(e);
-        }}
-        error={
-          touched.value && values.value.length > 0 && Boolean(errors.value)
-        }
-        inputProps={{
-          inputMode: "numeric",
-          pattern: "^[0-9.]{0,12}$",
-          onBlur: handleBlur,
-        }}
-        variant="outlined"
-        InputProps={{
-          endAdornment: <InputAdornment position="end">€</InputAdornment>,
-        }}
-      /> */}
       <Box display="flex" gap={1}>
         {editItem && (
           <Button variant="outlined" color="error" onClick={onClear}>
