@@ -9,23 +9,26 @@ import SigninForm from "../Auth/SigninForm";
 import MainLayout from "../Layout/MainLayout";
 import NoMatch from "../NoMatch/NoMatch";
 import { routes } from "../../routes";
+import AlertContextProvider from "../../context/AlertContextProvider";
 
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <Routes>
-        <Route path={routes.home} element={<RequiresAuth />}>
-          <Route element={<MainLayout />}>
-            <Route index element={<Home />} />
+      <AlertContextProvider>
+        <CssBaseline />
+        <Routes>
+          <Route path={routes.home} element={<RequiresAuth />}>
+            <Route element={<MainLayout />}>
+              <Route index element={<Home />} />
+            </Route>
           </Route>
-        </Route>
-        <Route element={<AuthLayout />}>
-          <Route path={routes.signIn} element={<SigninForm />} />
-          <Route path={routes.signUp} element={<SignupForm />} />
-        </Route>
-        <Route path={routes.nonExisting} element={<NoMatch />} />
-      </Routes>
+          <Route element={<AuthLayout />}>
+            <Route path={routes.signIn} element={<SigninForm />} />
+            <Route path={routes.signUp} element={<SignupForm />} />
+          </Route>
+          <Route path={routes.nonExisting} element={<NoMatch />} />
+        </Routes>
+      </AlertContextProvider>
     </ThemeProvider>
   );
 }

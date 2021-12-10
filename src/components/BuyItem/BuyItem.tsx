@@ -1,4 +1,4 @@
-import { IconButton, ListItem, ListItemText } from "@mui/material";
+import { IconButton, ListItem, ListItemText, Tooltip } from "@mui/material";
 import { MouseEvent, useState } from "react";
 import { useItemContext } from "../../context/ItemContextProvider";
 import { IBuyItem } from "../../types";
@@ -9,6 +9,7 @@ import ConfirmIcon from "@mui/icons-material/CheckOutlined";
 import { Box } from "@mui/system";
 import { useFormContext } from "../../context/FormContextProvider";
 import { defaultState as defaultFormState } from "../../context/FormContext";
+import NumberFormat from "react-number-format";
 
 interface IBuyItemProps {
   item: IBuyItem;
@@ -53,19 +54,28 @@ const BuyItem = ({ item }: IBuyItemProps) => {
       }}
       disablePadding
     >
-      <ListItemText
-        primaryTypographyProps={{
-          overflow: "hidden",
-          textOverflow: "ellipsis",
-        }}
-        primary={item.name}
-      />
+      <Tooltip title={item.name} enterDelay={1000}>
+        <ListItemText
+          primaryTypographyProps={{
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+          }}
+          primary={item.name}
+        />
+      </Tooltip>
       <ListItemText
         primaryTypographyProps={{
           fontWeight: "bold",
         }}
         sx={{ marginLeft: 3, flex: "1 0 auto", textAlign: "end" }}
-        primary={`${item.value} €`}
+        primary={
+          <NumberFormat
+            displayType="text"
+            thousandSeparator=" "
+            value={item.value}
+            suffix=" €"
+          />
+        }
       />
       <Box className="Actions" ml={2} display="flex">
         {isDeleting ? (

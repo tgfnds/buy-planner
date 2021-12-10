@@ -17,6 +17,10 @@ export const defaultState = {
   updateItem: () => null,
 };
 
+export const ITEM_LIMIT = !isNaN(Number(process.env.REACT_APP_ITEM_LIMIT))
+  ? Number(process.env.REACT_APP_ITEM_LIMIT)
+  : 100;
+
 const ItemContext = createContext<IItemContext>(defaultState);
 
 export default ItemContext;

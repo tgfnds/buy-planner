@@ -1,5 +1,5 @@
 import { FC, useContext, useEffect, useState } from "react";
-import ItemContext, { defaultState } from "./ItemContext";
+import ItemContext, { defaultState, ITEM_LIMIT } from "./ItemContext";
 import {
   fetchItems as fetchItemsFirebase,
   addItem as addItemFirebase,
@@ -8,6 +8,7 @@ import {
 } from "../api/firebase";
 import { IBuyItem } from "../types";
 import { useAuthContext } from "./AuthContextProvider";
+import { useAlertContext } from "./AlertContextProvider";
 
 export const useItemContext = () => useContext(ItemContext);
 
@@ -15,6 +16,7 @@ const ItemContextProvider: FC = ({ children }) => {
   const { user } = useAuthContext();
   const [loading, setLoading] = useState(defaultState.loading);
   const [items, setItems] = useState(defaultState.items);
+  const { show } = useAlertContext();
 
   /**
    * Adds a new item to firebase and updates state.
@@ -23,12 +25,17 @@ const ItemContextProvider: FC = ({ children }) => {
   async function addItem(newItem: IBuyItem) {
     setLoading(true);
     try {
+      if (items.length === ITEM_LIMIT) {
+        show(`Item limit of ${ITEM_LIMIT} reached!`, "error");
+        return;
+      }
       const item = await addItemFirebase(newItem);
       if (item) setItems([item, ...items]);
     } catch (error) {
       console.log("Couldn't add item.", error);
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   }
 
   /**
@@ -42,8 +49,9 @@ const ItemContextProvider: FC = ({ children }) => {
       if (rId) setItems(items.filter((i) => i.id !== id));
     } catch (error) {
       console.log("Couldn't delete item.", error);
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   }
 
   /**
@@ -62,8 +70,9 @@ const ItemContextProvider: FC = ({ children }) => {
       }
     } catch (error) {
       console.log("Couldn't update item.", error);
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   }
 
   useEffect(() => {
@@ -71,9 +80,10 @@ const ItemContextProvider: FC = ({ children }) => {
       try {
         const items = await fetchItemsFirebase(user?.uid ?? "");
         if (items) setItems(items);
-        setLoading(false);
       } catch (error) {
         console.log("Couldn't load items.", error);
+      } finally {
+        setLoading(false);
       }
     }
     fetch();

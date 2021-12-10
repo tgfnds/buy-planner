@@ -1,4 +1,9 @@
-import { Button, InputAdornment, TextField } from "@mui/material";
+import {
+  Button,
+  InputAdornment,
+  TextField,
+  TextFieldProps,
+} from "@mui/material";
 import { Box } from "@mui/system";
 import { ChangeEvent, FormEvent, useEffect, useRef } from "react";
 import { useAuthContext } from "../../context/AuthContextProvider";
@@ -8,6 +13,11 @@ import { useItemContext } from "../../context/ItemContextProvider";
 import { IBuyItem } from "../../types";
 import { useFormik } from "formik";
 import { BuyItemSchema } from "../../schemas/BuyItemSchema";
+import NumberFormat from "react-number-format";
+
+const SmallTextField = (props: TextFieldProps) => (
+  <TextField {...props} size="small" />
+);
 
 const BuyItemForm = () => {
   const { editItem, setEditItem } = useFormContext();
@@ -90,7 +100,31 @@ const BuyItemForm = () => {
         inputProps={{ onBlur: handleBlur }}
         variant="outlined"
       />
-      <TextField
+      <NumberFormat
+        customInput={SmallTextField}
+        sx={{ flex: 2 }}
+        variant="outlined"
+        error={
+          touched.value && values.value.length > 0 && Boolean(errors.value)
+        }
+        inputProps={{
+          onBlur: handleBlur,
+        }}
+        InputProps={{
+          endAdornment: <InputAdornment position="end">€</InputAdornment>,
+        }}
+        label="Value"
+        name="value"
+        value={values.value}
+        allowNegative={false}
+        maxLength={9}
+        onChange={(e: ChangeEvent<HTMLInputElement>) => {
+          if (e.target.value.match(e.target.pattern)) handleChange(e);
+        }}
+        decimalScale={2}
+        thousandSeparator=" "
+      />
+      {/* <TextField
         sx={{ flex: 2 }}
         size="small"
         name="value"
@@ -111,7 +145,7 @@ const BuyItemForm = () => {
         InputProps={{
           endAdornment: <InputAdornment position="end">€</InputAdornment>,
         }}
-      />
+      /> */}
       <Box display="flex" gap={1}>
         {editItem && (
           <Button variant="outlined" color="error" onClick={onClear}>

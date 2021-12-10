@@ -1,5 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import { useItemContext } from "../../context/ItemContextProvider";
+import { ITEM_LIMIT } from "../../context/ItemContext";
 
 const BuyItemCounter = () => {
   const { items } = useItemContext();
@@ -13,7 +14,7 @@ const BuyItemCounter = () => {
         variant="h5"
       >{`${items.length}`}</Typography>
       <Typography fontFamily="comforter" fontSize={16}>
-        / 100
+        / {ITEM_LIMIT}
       </Typography>
     </Box>
   );

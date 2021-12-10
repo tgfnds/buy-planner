@@ -3,6 +3,7 @@ import { Box, Button, Typography } from "@mui/material";
 import { useAuthContext } from "../../context/AuthContextProvider";
 import { MouseEvent } from "react";
 import { routes } from "../../routes";
+import PositionedSnackbarAlert from "../ui/PositionedSnackbarAlert";
 
 const MainLayout = () => {
   const { signOut, user } = useAuthContext();
@@ -55,6 +56,13 @@ const MainLayout = () => {
           </Box>
         </Box>
         <Outlet />
+        <PositionedSnackbarAlert
+          origin={{
+            horizontal: "center",
+            vertical: "top",
+          }}
+          autoHideDuration={3000}
+        />
       </Box>
     </Box>
   );

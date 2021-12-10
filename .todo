@@ -33,7 +33,7 @@ Project:
     ✔ Also query only items that are from user. @est(1h) @high @done(21-12-03 18:41)
     ✔ Persist login on refreshes. @critical @started(21-12-02 23:22) @done(21-12-03 00:45) @lasted(1h23m45s)
     ☐ Add realtime read from collection snapshot. (onSnapshot) @high 
-    ☐ Add a limit of 100 items per account. @high
+    ✔ Add a limit of 100 items per account. @high @started(21-12-10 14:47) @done(21-12-10 16:44) @lasted(1h57m13s)
     This seems to be impossible to do using rules. So either find a way to use
     cloud functions for free. Or limit in the client.
     ✔ Show an item counter at the bottom right of the list. @low @started(21-12-03 22:27) @done(21-12-03 23:09) @lasted(42m54s)
@@ -53,6 +53,9 @@ Project:
     ✔ Implement formik for Signin and Signup forms. @est(1.5h) @high @started(21-12-08 19:43) @done(21-12-09 15:53) @lasted(20h10m3s)
     Need to clean up FormProvider.
     Not sending editItem values to formik initial values.
+    ✘ Create a provider composer. @est(1h) @cancelled(21-12-10 16:47)
+    ✔ Add tooltip for huge item names. @est(30m) @started(21-12-10 18:33) @done(21-12-10 18:37) @lasted(4m38s)
+    ✔ Add react-number-format. @est(30m) @started(21-12-10 18:37) @done(21-12-10 18:44) @lasted(7m53s)
 
   Bugs:
     ☐ Doesn't have display name right after creating account. @low
@@ -79,3 +82,8 @@ Project:
     Make it more low profile.
     ☐ Implement Google OAuth.
     ☐ Add some animations.
+
+  Future Features:
+    ☐ Add categories. (Games, Books, etc)
+    ☐ History/Archive?
+    
