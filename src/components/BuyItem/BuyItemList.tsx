@@ -1,40 +1,33 @@
-import { List, Typography, Box, CircularProgress } from "@mui/material";
-import { useItemContext } from "../../context/ItemContextProvider";
+import {List, Typography, Box, CircularProgress} from "@mui/material";
+import {useItemContext} from "../../context/ItemContextProvider";
 import BuyItem from "./BuyItem";
 
 const BuyItemList = () => {
-  const { items, loading } = useItemContext();
+    const {items, loading} = useItemContext();
 
-  // function calcTotal() {
-  //   if (!items.length) return;
-  //   const values = items.map((item) => Number(item.value));
-  //   const total = values.reduce((pv, cv) => (pv += cv));
-  //   return total;
-  // }
+    if (loading && !items.length) {
+        return (
+            <Box p={4} textAlign="center">
+                <CircularProgress/>
+            </Box>
+        );
+    }
 
-  if (loading && !items.length) {
+    if (!items.length) {
+        return (
+            <Box p={4} textAlign="center" bgcolor="background.paper" borderRadius={1}>
+                <Typography variant="h5" letterSpacing={2}>No items found!</Typography>
+            </Box>
+        );
+    }
+
     return (
-      <Box p={4} textAlign="center">
-        <CircularProgress />
-      </Box>
+        <Box>
+            <List>
+                {items && items.map((item) => <BuyItem item={item} key={item.id}/>)}
+            </List>
+        </Box>
     );
-  }
-
-  if (!items.length) {
-    return (
-      <Box p={4} textAlign="center">
-        <Typography variant="h4">Add new items!</Typography>
-      </Box>
-    );
-  }
-
-  return (
-    <Box>
-      <List>
-        {items && items.map((item) => <BuyItem item={item} key={item.id} />)}
-      </List>
-    </Box>
-  );
 };
 
 export default BuyItemList;
