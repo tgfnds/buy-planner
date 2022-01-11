@@ -9,7 +9,6 @@ const RequiresAuth = () => {
     const {user, loading} = useAuthContext();
     const location = useLocation();
 
-    console.log("Rendering RequiresAuth")
     const isVerified = useMemo(() => user?.emailVerified ?? false, [user]);
 
     if (!user) {

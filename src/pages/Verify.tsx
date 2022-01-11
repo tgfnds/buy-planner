@@ -22,7 +22,6 @@ const Verify = () => {
         async function verify() {
             if (params.mode !== "verifyEmail" || params.oobCode === null) return;
             try {
-                console.log("verifying: ", params.oobCode);
                 await verifyEmail(params.oobCode);
             } catch (e) {
                 setError(getErrorMessage((e as Error).message));
