@@ -14,7 +14,7 @@ import {useNavigate} from "react-router";
 import {useFirebaseErrors} from "../../api/useFirebaseErrors";
 import {useAuthContext} from "../../context/AuthContextProvider";
 import {routes} from "../../routes";
-import {SigninSchema} from "../../schemas/SigninSchema";
+import {SignInSchema} from "../../schemas/SignInSchema";
 
 interface FormState {
     email: string;
@@ -28,7 +28,7 @@ const SignInForm = () => {
             email: "",
             password: "",
         },
-        validationSchema: SigninSchema,
+        validationSchema: SignInSchema,
         onSubmit: async (values) => {
             try {
                 setLoading(true);
@@ -65,21 +65,15 @@ const SignInForm = () => {
 
     async function onGoogleSignIn() {
         try {
-            setLoading(true);
             await signInWithGoogle();
         } catch (e) {
             setError(getErrorMessage((e as Error).message));
-        } finally {
-            setLoading(false);
         }
     }
 
     useEffect(() => {
-        if (!user) return;
-        if (user.emailVerified) {
+        if (user?.emailVerified) {
             navigate(routes.home);
-        } else {
-            navigate(routes.verifyEmail);
         }
     }, [user, navigate]);
 

@@ -1,7 +1,7 @@
 import {IconButton, ListItem, ListItemText, Tooltip} from "@mui/material";
 import {MouseEvent, useState} from "react";
 import {useItemContext} from "../../context/ItemContextProvider";
-import {IBuyItem} from "../../types";
+import {BuyItem} from "../../types";
 import DeleteIcon from "@mui/icons-material/DeleteOutline";
 import EditIcon from "@mui/icons-material/EditOutlined";
 import CancelIcon from "@mui/icons-material/CloseOutlined";
@@ -11,11 +11,11 @@ import {useFormContext} from "../../context/FormContextProvider";
 import {defaultState as defaultFormState} from "../../context/FormContext";
 import NumberFormat from "react-number-format";
 
-interface IBuyItemProps {
-    item: IBuyItem;
+interface BuyItemProps {
+    item: BuyItem;
 }
 
-const BuyItem = ({item}: IBuyItemProps) => {
+const BuyItemListItem = ({item}: BuyItemProps) => {
     const {setEditItem, editItem} = useFormContext();
     const {deleteItem} = useItemContext();
     const [isDeleting, setIsDeleting] = useState(false);
@@ -86,4 +86,4 @@ const BuyItem = ({item}: IBuyItemProps) => {
     );
 };
 
-export default BuyItem;
+export default BuyItemListItem;

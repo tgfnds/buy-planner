@@ -15,29 +15,29 @@ const AuthContextProvider: FC = ({children}) => {
     const [user, setUser] = useState(defaultState.user);
     const [loading, setLoading] = useState(defaultState.loading);
 
-    async function signIn(email: string, password: string) {
+    const signIn = useCallback(async (email: string, password: string) => {
         try {
             await signInFirebase(email, password);
         } catch (error) {
             throw error;
         }
-    }
+    }, []);
 
-    async function signInWithGoogle() {
+    const signInWithGoogle = useCallback(async () => {
         try {
             await signInWithGoogleFirebase();
         } catch (error) {
             throw error;
         }
-    }
+    }, []);
 
-    async function signUp(email: string, password: string, displayName: string) {
+    const signUp = useCallback(async (email: string, password: string, displayName: string) => {
         try {
             await signUpFirebase(email, password, displayName);
         } catch (error) {
             throw error;
         }
-    }
+    }, []);
 
     const verifyEmail = useCallback(async (code: string) => {
         try {
@@ -47,19 +47,23 @@ const AuthContextProvider: FC = ({children}) => {
         }
     }, []);
 
-    async function signOut() {
+    const signOut = useCallback(async () => {
         try {
             await signOutFirebase();
         } catch (error) {
             throw error;
         }
-    }
+    }, []);
 
     useEffect(() => {
         const unsubscribeAuthChanged = subscribeAuthStateChanged((user) => {
+            console.log("User changed:", user?.displayName ?? "not logged");
             setUser(user);
+            setLoading(false);
         });
-        return () => unsubscribeAuthChanged();
+        return () => {
+            unsubscribeAuthChanged();
+        }
     }, []);
 
     return (

@@ -10,7 +10,7 @@ import {
     updateProfile as updateProfileFirebase,
     User,
     GoogleAuthProvider,
-    signInWithPopup
+    signInWithPopup,
 } from "firebase/auth";
 import {
     addDoc,
@@ -25,10 +25,11 @@ import {
     serverTimestamp,
     updateDoc,
     where,
-    WithFieldValue
+    WithFieldValue,
+    onSnapshot
 } from "firebase/firestore";
 import {FirebaseError} from "@firebase/util";
-import {IBuyItem} from "../types";
+import {BuyItem} from "../types";
 import {nameof} from "../utils";
 
 const firebaseConfig: FirebaseOptions = {
@@ -52,15 +53,17 @@ function converter<T>() {
     };
 }
 
-const colRef = collection(db, "items").withConverter<IBuyItem>(converter<IBuyItem>());
+const colRef = collection(db, "items").withConverter<BuyItem>(converter<BuyItem>());
 
-export async function fetchItems(userId: string): Promise<IBuyItem[] | null> {
+function buildQuery(userId: string) {
+    return query(colRef, where(nameof<BuyItem>("userId"), "==", userId),
+        orderBy(nameof<BuyItem>("createdAt"), "desc")
+    );
+}
+
+export async function fetchItems(userId: string): Promise<BuyItem[] | null> {
     try {
-        const q = query(
-            colRef,
-            where(nameof<IBuyItem>("userId"), "==", userId),
-            orderBy(nameof<IBuyItem>("createdAt"), "desc")
-        );
+        const q = buildQuery(userId);
         const itemSnapshot = await getDocs(q);
         return itemSnapshot.docs.map((doc) => ({
             ...doc.data(),
@@ -71,7 +74,22 @@ export async function fetchItems(userId: string): Promise<IBuyItem[] | null> {
     }
 }
 
-export async function addItem(newItem: IBuyItem): Promise<IBuyItem | null> {
+export function subscribeItemOnSnapshot(userId: string, updateItems: (items: BuyItem[]) => void) {
+    try {
+        const q = buildQuery(userId)
+        return onSnapshot(q, (snapshot) => {
+            const items = snapshot.docs.map((doc) => ({
+                ...doc.data(),
+                id: doc.id
+            }));
+            updateItems(items);
+        });
+    } catch (error) {
+        throw new Error((error as FirebaseError).message);
+    }
+}
+
+export async function addItem(newItem: BuyItem): Promise<BuyItem | null> {
     try {
         const docRef = await addDoc(colRef, {...newItem, createdAt: serverTimestamp()});
         return {...newItem, id: docRef.id};
@@ -80,10 +98,10 @@ export async function addItem(newItem: IBuyItem): Promise<IBuyItem | null> {
     }
 }
 
-export async function updateItem(item: IBuyItem): Promise<IBuyItem | null> {
+export async function updateItem(item: BuyItem): Promise<BuyItem | null> {
     try {
         const docRef = doc(colRef, item.id);
-        await updateDoc(docRef, item as Omit<IBuyItem, "id">);
+        await updateDoc(docRef, item as Omit<BuyItem, "id">);
         return item;
     } catch (error) {
         throw new Error((error as FirebaseError).message);

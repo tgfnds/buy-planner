@@ -1,6 +1,6 @@
 import * as Yup from "yup";
 
-export const SigninSchema = Yup.object().shape({
+export const SignInSchema = Yup.object().shape({
   email: Yup.string()
     .email("Email must be in the correct format!")
     .required("Email is required!"),

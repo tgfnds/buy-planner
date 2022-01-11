@@ -39,11 +39,12 @@ const VerifyEmail = () => {
     }, [sendEmail]);
 
     useEffect(() => {
+        if (!user) return navigate(routes.signIn);
         if (user?.emailVerified) {
             setLoading(false);
             navigate(routes.signUpComplete);
         }
-    }, [navigate, setLoading, user?.emailVerified]);
+    }, [navigate, setLoading, user]);
 
     return (
         <Stack alignItems="center" m="auto" gap={1}>

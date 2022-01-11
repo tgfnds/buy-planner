@@ -1,6 +1,6 @@
 import { Timestamp } from "@firebase/firestore";
 
-export interface IBuyItem {
+export interface BuyItem {
   id?: string;
   name: string;
   value: string;
@@ -8,23 +8,18 @@ export interface IBuyItem {
   createdAt?: Timestamp;
 }
 
-export interface IBuyItemFormData {
+export interface BuyItemFormData {
   name: string;
   value: string;
 }
 
-export interface IItemState {
-  items: IBuyItem[];
-  addItem: (newItem: IBuyItem) => void;
+export interface ItemState {
+  items: BuyItem[];
+  addItem: (newItem: BuyItem) => void;
   deleteItem: (id: string) => void;
 }
 
-export interface IFormState {
-  editItem: IBuyItem | null;
-  setEditItem: (item: IBuyItem | null) => void;
-}
-
-export interface IAppState {
-  itemState: IItemState;
-  formState: IFormState;
+export interface FormState {
+  editItem: BuyItem | null;
+  setEditItem: (item: BuyItem | null) => void;
 }

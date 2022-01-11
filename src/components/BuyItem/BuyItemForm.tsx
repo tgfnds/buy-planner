@@ -10,7 +10,7 @@ import {useAuthContext} from "../../context/AuthContextProvider";
 import {defaultState} from "../../context/FormContext";
 import {useFormContext} from "../../context/FormContextProvider";
 import {useItemContext} from "../../context/ItemContextProvider";
-import {IBuyItem} from "../../types";
+import {BuyItem} from "../../types";
 import {useFormik} from "formik";
 import {BuyItemSchema} from "../../schemas/BuyItemSchema";
 import NumberFormat from "react-number-format";
@@ -33,7 +33,7 @@ const BuyItemForm = () => {
         handleChange,
         handleBlur,
         isValid,
-    } = useFormik<IBuyItem>({
+    } = useFormik<BuyItem>({
         initialValues: {
             name: editItem ? editItem.name : "",
             value: editItem ? editItem.value : "",
@@ -41,14 +41,14 @@ const BuyItemForm = () => {
         validationSchema: BuyItemSchema,
         onSubmit: (values) => {
             if (!editItem) {
-                const newItem: IBuyItem = {
+                const newItem: BuyItem = {
                     name: values.name,
                     value: values.value,
                     userId: user?.uid,
                 };
                 addItem(newItem);
             } else {
-                const newItem: IBuyItem = {
+                const newItem: BuyItem = {
                     ...editItem,
                     name: values.name,
                     value: values.value,

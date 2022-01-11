@@ -1,6 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import { useItemContext } from "../../context/ItemContextProvider";
-import { ITEM_LIMIT } from "../../context/ItemContext";
+import { ITEM_LIMIT } from "../../context/ItemContextState";
 
 const BuyItemCounter = () => {
   const { items } = useItemContext();

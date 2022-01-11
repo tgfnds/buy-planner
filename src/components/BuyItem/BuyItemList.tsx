@@ -1,6 +1,6 @@
 import {List, Typography, Box, CircularProgress} from "@mui/material";
 import {useItemContext} from "../../context/ItemContextProvider";
-import BuyItem from "./BuyItem";
+import BuyItemListItem from "./BuyItemListItem";
 
 const BuyItemList = () => {
     const {items, loading} = useItemContext();
@@ -24,7 +24,7 @@ const BuyItemList = () => {
     return (
         <Box>
             <List>
-                {items && items.map((item) => <BuyItem item={item} key={item.id}/>)}
+                {items && items.map((item) => <BuyItemListItem item={item} key={item.id}/>)}
             </List>
         </Box>
     );

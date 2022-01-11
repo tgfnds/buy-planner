@@ -1,11 +1,11 @@
 import { createContext } from "react";
-import { IFormState } from "../types";
+import { FormState } from "../types";
 
-export const defaultState: IFormState = {
+export const defaultState: FormState = {
   editItem: null,
   setEditItem: () => null,
 };
 
-const FormContext = createContext<IFormState>(defaultState);
+const FormContext = createContext<FormState>(defaultState);
 
 export default FormContext;

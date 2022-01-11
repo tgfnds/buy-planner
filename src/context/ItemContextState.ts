@@ -1,17 +1,17 @@
 import { createContext } from "react";
-import { IBuyItem } from "../types";
+import { BuyItem } from "../types";
 
-interface IItemContext {
+interface ItemContextType {
   loading: boolean;
-  items: IBuyItem[];
-  addItem: (newItem: IBuyItem) => void;
+  items: BuyItem[];
+  addItem: (newItem: BuyItem) => void;
   deleteItem: (id: string) => void;
-  updateItem: (item: IBuyItem) => void;
+  updateItem: (item: BuyItem) => void;
 }
 
 export const defaultState = {
   loading: true,
-  items: [] as IBuyItem[],
+  items: [] as BuyItem[],
   addItem: () => null,
   deleteItem: () => null,
   updateItem: () => null,
@@ -21,6 +21,6 @@ export const ITEM_LIMIT = !isNaN(Number(process.env.REACT_APP_ITEM_LIMIT))
   ? Number(process.env.REACT_APP_ITEM_LIMIT)
   : 100;
 
-const ItemContext = createContext<IItemContext>(defaultState);
+const ItemContext = createContext<ItemContextType>(defaultState);
 
 export default ItemContext;
